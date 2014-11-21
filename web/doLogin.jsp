@@ -9,7 +9,7 @@
 
     Connection conn = null;
     Class.forName("com.mysql.jdbc.Driver").newInstance();
-    conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/USERS","root", "");
+    conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/USERS","root", "mapm");
     
     ResultSet rsdoLogin = null;
     PreparedStatement psdoLogin=null;
