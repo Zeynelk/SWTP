@@ -18,7 +18,7 @@
         <%!
         
         public class User {
-            String URL="jdbc:mysql://localhost:3306/users";
+            String URL="jdbc:mysql://localhost:3306/USERS";
             
             String USERNAME ="root";
             String PASSWORD="mapm";
