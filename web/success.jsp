@@ -15,9 +15,12 @@
     
 
 <%
-out.print("UserName : "+session.getAttribute("sUserName")+"<br>");
-out.print("First- & LastName : "+session.getAttribute("sFirstName")+", "+session.getAttribute("sLastName")+"<br>");
-out.print("Logged in at : "+session.getAttribute("sLastLogin")+"<br>");
+out.print("Benutzername : "+session.getAttribute("sUserName")+"<br>");
+
+out.print("Nachname: "+session.getAttribute("sFirstName")+"<br>");
+out.print("Nachname: "+session.getAttribute("sLastName")+"<br>");
+
+//out.print("Logged in at : "+session.getAttribute("sLastLogin")+"<br>");
 %>
 </body>
 </html>

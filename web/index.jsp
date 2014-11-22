@@ -34,7 +34,7 @@
                     
                     connection = DriverManager.getConnection(URL,USERNAME,PASSWORD);
                     
-                    selectUsers=connection.prepareStatement("SELECT uUserName FROM users");
+                    selectUsers=connection.prepareStatement("SELECT Benutzername FROM administrator");
                 }catch(SQLException e){
                     e.printStackTrace();
                 }
