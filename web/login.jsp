@@ -17,7 +17,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Login-Page</title>
-        <link rel="stylesheet" href="stylesheet.css" type="text/css">
+       <link rel="stylesheet" href="" type="text/css">
 <script>
             
     function trim(s) 
@@ -27,6 +27,7 @@
 
     function validate()
     {
+  
         if(trim(document.formLogin.fUserName.value)==="")
         {
           alert("Login ist leer");
@@ -39,6 +40,7 @@
           document.formLogin.fPwd.focus();
           return false;
         }
+    
     }
 </script>
 
@@ -47,16 +49,27 @@
         <div><%=error%></div>
         
         <h3>Bitte geben Sie Ihre Zugangsdaten ein</h3>
-        <form name="formLogin" onSubmit="return validate();" action="doLogin.jsp" method="post">
-            <fieldset>
-                <legend>Login</legend>
-                <label for="lUserName">Username</label>
-                <input type="text" name="fUserName" id="lUserName" /><br/>
-                <label for="lPwd">Password</label>
-                <input type="password" name="fPwd" id="lPwd"/><br/>
-                <input type="submit" name="sSubmit" value="Submit" />
-            </fieldset>
-        </form> 
+       
+        <form name="formLogin" onSubmit="return validate();" action="doLogin.jsp" method="POST">
+            <table border="0">
+              
+                <tbody>
+                    <tr>
+                        <td>Benutzername</td>
+                        <td><input type="text" name="fUserName" id="lUserName" /><br/></td>
+                    </tr>
+                    <tr>
+                        <td>Passwort</td>
+                        <td> <input type="password" name="fPwd" id="lPwd"/><br/></td>
+                    </tr>
+                </tbody>
+              
+            </table>
+  <input type="submit" name="sSubmit" value="Submit" />
+        </form>
+        <form name="redirectRegister" action="register.jsp" method="POST">
+            <input type="submit" value="Registrieren" name="register" />
+        </form>
 
        
       

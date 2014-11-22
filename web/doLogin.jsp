@@ -20,8 +20,8 @@
     String message="User-Login war erfolgreich";
     
     try{
-    String sqlOption="SELECT * FROM users where"
-                    +" uUserName=? and uPassword=?";
+    String sqlOption="SELECT * FROM benutzer where"
+                    +" Benutzername=? and Passwort=?";
     
     psdoLogin=conn.prepareStatement(sqlOption);
     
@@ -32,15 +32,17 @@
     
     if(rsdoLogin.next())
     {
-      String ssUserName=rsdoLogin.getString("uUserName");
+      String ssUserName=rsdoLogin.getString("Benutzername");
      
+      
       session.setAttribute("sUserName",ssUserName);
-      session.setAttribute("sFirstName", rsdoLogin.getString("uFirstName"));
-      session.setAttribute("sLastName", rsdoLogin.getString("uLastName"));
-      session.setAttribute("sLastLogin", rsdoLogin.getString("uLastLogin"));
-     
+      session.setAttribute("sFirstName", rsdoLogin.getString("Vorname"));
+      session.setAttribute("sLastName", rsdoLogin.getString("Nachname"));
+      //session.setAttribute("sLastLogin", rsdoLogin.getString("uLastLogin"));
+    
      
       response.sendRedirect("success.jsp?error="+message);
+     
     }
     else
     {
