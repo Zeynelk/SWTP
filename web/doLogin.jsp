@@ -9,7 +9,7 @@
 <%
     Connection conn = null;
     Class.forName("com.mysql.jdbc.Driver").newInstance();
-    conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/USERS", "root", "smns");
+    conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/USERS", "root", "mapm");
 
     ResultSet rsdoLogin = null;
     PreparedStatement psdoLogin = null;
@@ -39,9 +39,11 @@
 
             response.sendRedirect("success.jsp?error=" + message);
             
-        } else {
-            message = "Eingabe falsch: User/Password nicht korrekt";
-            response.sendRedirect("login.jsp?error=" + message);
+        } else {%>
+           <SCRIPT LANGUAGE="JavaScript">
+                        alert("Anmeldung fehlgeschlagen.\nBenutzername oder Passwort falsch.");
+                        window.document.location.replace("login.jsp");
+                </SCRIPT><%
         }
     } catch (Exception e) {
         e.printStackTrace();
