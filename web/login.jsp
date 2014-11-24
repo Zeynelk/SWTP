@@ -26,23 +26,58 @@
                 return s.replace(/^s*/, "").replace(/s*$/, "");
             }
 
-            function validate()
+            function validateLogin()
             {
 
                 if (trim(document.formLogin.fUserName.value) === "")
                 {
-                    alert("Login ist leer");
+                    alert("Login ist leer!");
                     document.formLogin.fUserName.focus();
                     return false;
                 }
                 else if (trim(document.formLogin.fPwd.value) === "")
                 {
-                    alert("passwort ist leer");
+                    alert("Passwort ist leer!");
                     document.formLogin.fPwd.focus();
                     return false;
                 }
-
+                
             }
+            
+            function validateRegister() {
+                
+                if (trim(document.formRegister.vornameN.value) === "")
+                {
+                    alert("Vorname ist leer!");
+                    document.formRegister.vornameN.focus();
+                    return false;
+                }
+                else if (trim(document.formRegister.nachnameN.value) === "")
+                {
+                    alert("Nachname ist leer!");
+                    document.formRegister.nachnameN.focus();
+                    return false;
+                }
+                else if (trim(document.formRegister.emailN.value) === "")
+                {
+                    alert("Email ist leer!");
+                    document.formRegister.emailN.focus();
+                    return false;
+                }
+                else if (trim(document.formRegister.benutzerN.value) === "")
+                {
+                    alert("Benutzername ist leer!");
+                    document.formRegister.benutzerN.focus();
+                    return false;
+                }
+                else if (trim(document.formRegister.passW.value) === "")
+                {
+                    alert("Passwort ist leer!");
+                    document.formRegister.passW.focus();
+                    return false;
+                }
+            }
+            
         </script>
 
         <style>
@@ -112,7 +147,7 @@
                     <p>
                         Bitte melden Sie sich mit Ihren Benutzerdaten sich an.
                     </p>
-                    <form name="formLogin" onSubmit="return validate();" action="doLogin.jsp" method="POST">
+                    <form name="formLogin" onSubmit="return validateLogin();" action="doLogin.jsp" method="POST">
                         <ul>
                             <li>
                                 <input type="text" name="fUserName" placeholder="Benutzername" />
@@ -132,7 +167,7 @@
                     <p>
                         Bitte füllen Sie alle Felder aus, um sich erfolgreich zu registrieren.
                     </p>
-                    <form name="myForm"  action="register.jsp" method="POST">
+                    <form name="formRegister" onSubmit="return validateRegister();" action="register.jsp" method="POST">
                         <ul>
                             <li>
                                 <input type="text" name="vornameN" placeholder="Vorname" />
