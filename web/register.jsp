@@ -14,7 +14,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Doc: Register</title>    
+        <title>Doc: Register</title>   
     </head>
     <body onload="displayResults()">
         <%!

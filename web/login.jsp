@@ -31,14 +31,20 @@
 
                 if (trim(document.formLogin.fUserName.value) === "")
                 {
-                    alert("Login ist leer");
+                    alert("Login ist leer!");
                     document.formLogin.fUserName.focus();
                     return false;
                 }
                 else if (trim(document.formLogin.fPwd.value) === "")
                 {
-                    alert("passwort ist leer");
+                    alert("Passwort ist leer!");
                     document.formLogin.fPwd.focus();
+                    return false;
+                }
+                else if (trim(document.formRegister.vornameN.value) === "")
+                {
+                    alert("Vorname ist leer!");
+                    document.formRegister.vornameN.focus();
                     return false;
                 }
 
@@ -132,7 +138,7 @@
                     <p>
                         Bitte füllen Sie alle Felder aus, um sich erfolgreich zu registrieren.
                     </p>
-                    <form name="myForm"  action="register.jsp" method="POST">
+                    <form name="formRegister" onSubmit="return validate();" action="register.jsp" method="POST">
                         <ul>
                             <li>
                                 <input type="text" name="vornameN" placeholder="Vorname" />
