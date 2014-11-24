@@ -19,6 +19,12 @@
             out.print("Nachname: " + session.getAttribute("sFirstName") + "<br>");
             out.print("Nachname: " + session.getAttribute("sLastName") + "<br>");
         //out.print("Logged in at : "+session.getAttribute("sLastLogin")+"<br>");
+ 
         %>
+        <form action="logout.jsp" method="POST">
+            <input type="submit"  value="logout" name="logout" />
+        </form>
+        
+        
     </body>
 </html>
