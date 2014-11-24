@@ -14,6 +14,7 @@
     <body>
         <p>Erfolgreich eingeloggt</p>
 
+<<<<<<< Updated upstream
         <%
             out.print("Benutzername : " + session.getAttribute("sUserName") + "<br>");
             out.print("Nachname: " + session.getAttribute("sFirstName") + "<br>");
@@ -27,4 +28,17 @@
         
         
     </body>
+=======
+<%
+out.print("UserName : "+session.getAttribute("sUserName")+"<br>");
+out.print("First- & LastName : "+session.getAttribute("sFirstName")+", "+session.getAttribute("sLastName")+"<br>");
+out.print("Logged in at : "+session.getAttribute("sLastLogin")+"<br>");
+
+
+%>
+
+
+    
+</body>
+>>>>>>> Stashed changes
 </html>

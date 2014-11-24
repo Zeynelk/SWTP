@@ -12,6 +12,7 @@
     conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/USERS", "root", "smns");
 
     ResultSet rsdoLogin = null;
+<<<<<<< Updated upstream
     PreparedStatement psdoLogin = null;
 
     String sUserName = request.getParameter("fUserName");
@@ -46,6 +47,46 @@
                 </SCRIPT><%
         }
     } catch (Exception e) {
+=======
+    PreparedStatement psdoLogin=null;
+    
+    String sUserName=request.getParameter("fUserName");
+    String sPassword=request.getParameter("fPwd");
+    
+    String message="User-Login war erfolgreich";
+    
+    try{
+    String sqlOption="SELECT * FROM users where"
+                    +" uUserName=? and uPassword=?";
+    
+    psdoLogin=conn.prepareStatement(sqlOption);
+    
+    psdoLogin.setString(1,sUserName);
+    psdoLogin.setString(2,sPassword);
+    
+    rsdoLogin=psdoLogin.executeQuery();
+    
+    if(rsdoLogin.next())
+    {
+      String ssUserName=rsdoLogin.getString("uUserName");
+     
+      session.setAttribute("sUserName",ssUserName);
+      session.setAttribute("sFirstName", rsdoLogin.getString("uFirstName"));
+      session.setAttribute("sLastName", rsdoLogin.getString("uLastName"));
+      session.setAttribute("sLastLogin", rsdoLogin.getString("uLastLogin"));
+     
+     
+      response.sendRedirect("success.jsp?error="+message);
+    }
+    else
+    {
+      message="User nicht registriert." ;
+      response.sendRedirect("login.jsp?error="+message);
+    }
+    }
+    catch(Exception e)
+    {
+>>>>>>> Stashed changes
         e.printStackTrace();
     }
 

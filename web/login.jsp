@@ -103,6 +103,7 @@
         <div><%=error%></div>
         
         <h3>Bitte geben Sie Ihre Zugangsdaten ein</h3>
+<<<<<<< Updated upstream
        
         <form name="formLogin" onSubmit="return validate();" action="doLogin.jsp" method="POST">
             <table border="0">
@@ -231,6 +232,18 @@
         <script class="cssdeck" src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
         <script src="style/js/index.js"></script>
 
+=======
+        <form name="formLogin" onSubmit="return validate();" action="doLogin.jsp" method="post">
+            <fieldset>
+                <legend>Login</legend>
+                <label for="lUserName">Username</label>
+                <input type="text" name="fUserName" id="lUserName" /><br/>
+                <label for="lPwd">Password</label>
+                <input type="password" name="fPwd" id="lPwd"/><br/>
+                <input type="submit" name="sSubmit" value="Login" />
+            </fieldset>
+        </form> 
+>>>>>>> Stashed changes
     </body>
 
 </html>
