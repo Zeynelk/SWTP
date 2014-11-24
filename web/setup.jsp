@@ -90,26 +90,6 @@
         %>
 
 
-
-        <%--
-        <form action="setup.jsp" method="POST">
-            <table border="0">
-                <tbody>
-                    <tr>
-                        <td>Benutzername</td>
-                        <td><input type="text" name="benutzerN" value="" size="30" /></td>
-                    </tr>
-                    <tr>
-                        <td>Passwort</td>
-                        <td><input type="text" name="passW" value="" size="20" /></td>
-                    </tr>
-                </tbody>
-            </table>
-            <input type="reset" value="Clear" name="clear" />
-            <input type="submit" value="Submit" name="submit" />
-        </form>
-        --%>
-
         <div class="container">
             <div class="flat-form">
                 <ul class="tabs">

@@ -12,6 +12,13 @@
     }
 %>
 
+<%
+    String logout = request.getParameter("logout");
+    if (logout == null || logout == "null") {
+        logout = "";
+    }
+%>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -41,11 +48,11 @@
                     document.formLogin.fPwd.focus();
                     return false;
                 }
-                
+
             }
-            
+
             function validateRegister() {
-                
+
                 if (trim(document.formRegister.vornameN.value) === "")
                 {
                     alert("Vorname ist leer!");
@@ -77,58 +84,14 @@
                     return false;
                 }
             }
-            
-        </script>
 
-        <style>
-            .zoom50 {
-                zoom: 50%;
-                background-color: #00F9F9;
-                width: 80px;
-                height: 80px;
-            }
-            .zoom100 {
-                zoom: 100%;
-                background-color: #00F9F9;
-                width: 80px;
-                height: 80px;
-            }
-        </style>
+        </script>
 
     </head>
 
     <body>
 
-        <!--
-        <div><%=error%></div>
-        
-        <h3>Bitte geben Sie Ihre Zugangsdaten ein</h3>
-       
-        <form name="formLogin" onSubmit="return validate();" action="doLogin.jsp" method="POST">
-            <table border="0">
-              
-                <tbody>
-                    <tr>
-                        <td>Benutzername</td>
-                        <td><input type="text" name="fUserName" id="lUserName" /><br/></td>
-                    </tr>
-                    <tr>
-                        <td>Passwort</td>
-                        <td> <input type="password" name="fPwd" id="lPwd"/><br/></td>
-                    </tr>
-                </tbody>
-              
-            </table>
-  <input type="submit" name="sSubmit" value="Submit" />
-        </form>
-        <form name="redirectRegister" action="register.jsp" method="POST">
-            <input type="submit" value="Registrieren" name="register" />
-        </form>
-        -->
-
-
-
-        <div class="container">
+        <div class="container" >
             <div class="flat-form">
                 <ul class="tabs">
                     <li>
@@ -221,16 +184,22 @@
                 </div>
             </div>   
         </div>
-        
+
         <div id="copyright">
             <center>
-            <p class="clear"> Copyright &copy; 2014 by MAPM, SMNS, ZKMR, OESM</p>
+                <p class="clear"> Copyright &copy; 2014 by MAPM, SMNS, ZKMR, OESM</p>
             </center>
         </div>
 
         <script class="cssdeck" src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
         <script src="style/js/index.js"></script>
 
-    </body>
+    <center>
+
+        <p><%=logout%></p>
+
+    </center>
+
+</body>
 
 </html>

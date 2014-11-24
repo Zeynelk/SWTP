@@ -106,39 +106,18 @@
 
         %>
 
-        <%--
-        <form name="myForm" action="login.jsp" method="POST">
-            <input type="hidden" name="hidden" value="Hallo"/>
-            
-
-        </form>
-
+        <%            if (result == 0) { %>
         <SCRIPT LANGUAGE="JavaScript">
-
-            function displayResults() {
-                if (document.myForm.hidden.value === 1) {
-                    alert("Registrierung Erfolgreich!\nSie werden auf die Login-Seite weitergeleitet.");
-                    window.location = "login.jsp";
-                }
-                
-                
-            }
-
+            alert("Registrierung fehlgeschlagen!\nSie werden auf die Login-Seite weitergeleitet.");
+            window.document.location.replace("login.jsp");
+        </SCRIPT>   <%
+        } else if (result == 1) {
+        %>
+        <SCRIPT LANGUAGE="JavaScript">
+            alert("Registrierung Erfolgreich!\nSie werden auf die Login-Seite weitergeleitet.");
+            window.document.location.replace("login.jsp");
         </SCRIPT>
-        --%>
         <%
-            if(result==0) { %>
-                <SCRIPT LANGUAGE="JavaScript">
-                        alert("Registrierung fehlgeschlagen!\nSie werden auf die Login-Seite weitergeleitet.");
-                        window.document.location.replace("login.jsp");
-                </SCRIPT>   <%
-            } else if (result == 1) {
-            %>
-                <SCRIPT LANGUAGE="JavaScript">
-                        alert("Registrierung Erfolgreich!\nSie werden auf die Login-Seite weitergeleitet.");
-                        window.document.location.replace("login.jsp");
-                </SCRIPT>
-            <% 
             }
         %>
 
