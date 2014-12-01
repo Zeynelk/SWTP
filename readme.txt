@@ -1,4 +1,4 @@
-<------------GITHUB-------------------------------------------------->
+﻿<------------GITHUB-------------------------------------------------->
 
 Netbeans erstellt automatisch einen Ordner build im Projektordner.
 Wenn dieser Ordner nicht gelöscht wird, werdet ihr nicht eure aktuellen
@@ -36,8 +36,7 @@ Benutzername (Typ: Varchar,Size 30)
 
 <--------------------------------------------------------------------->
 
-
-
+Hallo
 
 
 
