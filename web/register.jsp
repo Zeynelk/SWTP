@@ -23,7 +23,7 @@
                 String URL = "jdbc:mysql://localhost:3306/USERS";
 
                 String USERNAME = "root";
-                String PASSWORD = "smns";
+                String PASSWORD = "mapm";
 
                 Connection connection = null;
                 PreparedStatement insertUsers = null;
@@ -33,7 +33,7 @@
                     try {
 
                         connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-                        insertUsers = connection.prepareStatement("INSERT INTO benutzer VALUES (?,?,?,?,?)");
+                        insertUsers = connection.prepareStatement("INSERT INTO benutzer VALUES (?,?,?,?,?,?)");
 
                     } catch (SQLException e) {
                         e.printStackTrace();
@@ -51,6 +51,7 @@
                         insertUsers.setString(3, vornameN);
                         insertUsers.setString(4, nachnameN);
                         insertUsers.setString(5, emailN);
+                        insertUsers.setString(6, "USERS");
 
                         result = insertUsers.executeUpdate();
 

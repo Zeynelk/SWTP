@@ -21,7 +21,7 @@
                 String URL = "jdbc:mysql://localhost:3306/USERS";
 
                 String USERNAME = "root";
-                String PASSWORD = "smns";
+                String PASSWORD = "mapm";
 
                 Connection connection = null;
                 PreparedStatement selectUsers = null;
@@ -33,7 +33,7 @@
 
                         connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
 
-                        selectUsers = connection.prepareStatement("SELECT Benutzername FROM administrator");
+                        selectUsers = connection.prepareStatement("SELECT Benutzername FROM benutzer");
                         
                     } catch (SQLException e) {
                         

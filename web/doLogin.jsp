@@ -9,7 +9,7 @@
 <%
     Connection conn = null;
     Class.forName("com.mysql.jdbc.Driver").newInstance();
-    conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/USERS", "root", "smns");
+    conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/USERS", "root", "mapm");
 
     ResultSet rsdoLogin = null;
     PreparedStatement psdoLogin = null;
@@ -37,7 +37,7 @@
             session.setAttribute("sLastName", rsdoLogin.getString("Nachname"));
             //session.setAttribute("sLastLogin", rsdoLogin.getString("uLastLogin"));
 
-            response.sendRedirect("success.jsp?error=" + message);
+            response.sendRedirect("success2.jsp?error=" + message);
             
         } else {%>
            <SCRIPT LANGUAGE="JavaScript">
