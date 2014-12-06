@@ -65,9 +65,9 @@
                                 </table>
                                 <br>
                             </li>
-                            <li>
+                           
                                 <input type="submit" value="Abmelden" class="button" />
-                            </li>
+                          
                         </ul>
                     </form>
                 </div>

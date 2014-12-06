@@ -33,7 +33,7 @@
                     try {
 
                         connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-                        insertUsers = connection.prepareStatement("INSERT INTO administrator VALUES (?,?)");
+                        insertUsers = connection.prepareStatement("INSERT INTO benutzer VALUES (?,?,?,?,?,?)");
 
                     } catch (SQLException e) {
                         e.printStackTrace();
@@ -46,9 +46,12 @@
                     int result = 0;
 
                     try {
-                        insertUsers.setString(1, benutzerN);
-                        insertUsers.setString(2, passW);
-
+                        insertUsers.setString(1, null);
+                        insertUsers.setString(2, null);
+                        insertUsers.setString(3, null);
+                        insertUsers.setString(4, passW);
+                        insertUsers.setString(5, benutzerN);
+                        insertUsers.setString(6,"ADMINISTRATOR");
                         result = insertUsers.executeUpdate();
 
                     } catch (SQLException e) {
