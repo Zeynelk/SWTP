@@ -85,7 +85,16 @@
                     
                    
                     <li>
-                   
+                        
+                        <%
+                    if(session.getAttribute("sRole").equals("USER")){
+                        out.println("<a href=\"http://www.google.de\">LOLO</a>");
+                    }
+                        %>
+                    </li>
+                    
+                    <li>
+                        
                         <a href="blank-page.html"><i class="fa fa-fw fa-file"></i> Blank Page</a>
                     </li>
                     <li>
