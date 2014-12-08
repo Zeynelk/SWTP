@@ -1,9 +1,13 @@
+<%@taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql"%>
 <%-- 
     Document   : success2
     Created on : 06.12.2014, 18:33:37
     Author     : alimpamukci
 --%>
 
+<%@page import="java.sql.*"%>
+<%@page import ="java.util.Date" %>
+<% Class.forName("com.mysql.jdbc.Driver");%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -41,6 +45,110 @@
 
 <body>
 
+         <%!
+            public class User {
+
+                String URL = "jdbc:mysql://localhost:3306/USERS";
+
+                String USERNAME = "root";
+                String PASSWORD = "mapm";
+
+                Connection connection = null;
+                PreparedStatement updateUser = null;
+
+                public User() {
+
+                    try {
+
+                        connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+                        updateUser = connection.prepareStatement("UPDATE benutzer SET Benutzername=?, Passwort = ?, Email = ? WHERE ID = ? ;");
+
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+                
+                public int updateUsers(String benutzerN, String passW,String email,String ID) {
+
+                    int result = 0;
+                  
+                    
+
+                    try {
+                        updateUser.setString(1, benutzerN);
+                        updateUser.setString(2, passW);
+                        updateUser.setString(3, email);
+                        updateUser.setString(4, ID);
+                        
+                       
+                        
+                        
+                        result = updateUser.executeUpdate();
+
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+
+                    return result;
+                }
+            }
+        %>
+
+        <%
+//Setup Values The User needs
+            int result = 0;
+            String Benutzername = new String();
+            String Passwort = new String();
+            String Email = new String();
+            String Id= new String();
+            
+
+
+            if (request.getParameter("benutzerN") != null) {
+                Benutzername = request.getParameter("benutzerN");
+                 session.setAttribute("sUserName", Benutzername);
+
+            }
+            if (request.getParameter("passW") != null) {
+
+                Passwort = request.getParameter("passW");
+                session.setAttribute("sPassWord",Passwort);
+
+            }
+            
+            if (request.getParameter("email") != null) {
+
+                Email = request.getParameter("email");
+                session.setAttribute("sEmail",Email);
+                
+                
+
+            }
+                     if (request.getParameter("id") != null) {
+
+                Id = request.getParameter("id");
+                
+
+            }
+            
+
+           
+          
+            User users = new User();
+
+            if (!Benutzername.isEmpty() && !Passwort.isEmpty() && !Email.isEmpty()) {
+      
+                result = users.updateUsers(Benutzername, Passwort,Email,Id);
+               
+             
+            } else {
+              
+            }
+
+
+        %>
+
     <div id="wrapper">
 
         <!-- Navigation -->
@@ -60,7 +168,7 @@
                 
    
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> John Smith <b class="caret"></b></a>
+                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <% out.print("&nbsp; &nbsp; &nbsp;" + session.getAttribute("sFirstName")); %><% out.print(" "+session.getAttribute("sLastName"));%> <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li>
                             <a href="profile.jsp"><i class="fa fa-fw fa-user"></i> Profile</a>
@@ -71,7 +179,7 @@
                         </li>
                         <li class="divider"></li>
                         <li>
-                            <a href="#"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
+                            <a href="logout.jsp"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
                         </li>
                     </ul>
                 </li>
@@ -102,7 +210,43 @@
                         <h1 class="page-header">
                             Benutzerdaten <small></small>
                         </h1>
+                      <div class="table-responsive">
                        
+                          <form>
+                              
+                                   <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Benutzername</td>
+                                        <td><input  type="text" name="benutzerN" value="<% out.print(""+session.getAttribute("sUserName"));%>" size="40" /></td>
+                                        
+                                        
+                                    </tr>
+                                    <tr>
+                                        <td>Passwort</td>
+                                        <td><input type="text" name="passW" value="<% out.print(""+session.getAttribute("sPassWord"));%>" size="40" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td>E-Mail</>
+                                        <td><input type="text" name="email" value="<% out.print(""+session.getAttribute("sEmail"));%>" size="40"/></td>
+                                        <input type="hidden" name="id" value="<% out.print(""+session.getAttribute("sID"));%>" size="40"/>
+                                    </tr>
+                                   
+                                </tbody>
+                            </table>
+                                    
+                                    <input type="submit" value="Ändern" name="Ändern" class="btn btn-lg btn-warning"/>     
+                                    <input type="reset" value="Reset" name="Reset" class="btn btn-lg btn-primary"/>
+                          </form>
+                                        
                     </div>
                 </div>
                 <!-- /.row -->

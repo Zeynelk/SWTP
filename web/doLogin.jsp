@@ -32,9 +32,15 @@
         if (rsdoLogin.next()) {
             String ssUserName = rsdoLogin.getString("Benutzername");
 
+            
             session.setAttribute("sUserName", ssUserName);
             session.setAttribute("sFirstName", rsdoLogin.getString("Vorname"));
             session.setAttribute("sLastName", rsdoLogin.getString("Nachname"));
+            session.setAttribute("sPassWord",rsdoLogin.getString("Passwort"));
+            session.setAttribute("sEmail", rsdoLogin.getString("Email"));
+            session.setAttribute("sRole",rsdoLogin.getString("Rolle"));
+            session.setAttribute("sID",rsdoLogin.getString("ID"));
+      
             //session.setAttribute("sLastLogin", rsdoLogin.getString("uLastLogin"));
 
             response.sendRedirect("success2.jsp?error=" + message);
