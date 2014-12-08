@@ -33,7 +33,7 @@
                     try {
 
                         connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-                        insertUsers = connection.prepareStatement("INSERT INTO benutzer VALUES (?,?,?,?,?,?)");
+                        insertUsers = connection.prepareStatement("INSERT INTO benutzer VALUES (?,?,?,?,?,?,?)");
 
                     } catch (SQLException e) {
                         e.printStackTrace();
@@ -46,12 +46,13 @@
                     int result = 0;
 
                     try {
-                        insertUsers.setString(1, benutzerN);
-                        insertUsers.setString(2, passW);
-                        insertUsers.setString(3, vornameN);
-                        insertUsers.setString(4, nachnameN);
-                        insertUsers.setString(5, emailN);
-                        insertUsers.setString(6, "USERS");
+                        insertUsers.setString(1, null);
+                        insertUsers.setString(2, benutzerN);
+                        insertUsers.setString(3, passW);
+                        insertUsers.setString(4, vornameN);
+                        insertUsers.setString(5, nachnameN);
+                        insertUsers.setString(6, emailN);
+                        insertUsers.setString(7, "USER");
 
                         result = insertUsers.executeUpdate();
 

@@ -67,7 +67,11 @@
                 String redirectURL = "login.jsp";
                 response.sendRedirect(redirectURL);
 
-            } else {
+            } else if(0==1){
+                
+                
+                
+            }else {
 
                 String redirectURL = "setup.jsp";
                 response.sendRedirect(redirectURL);

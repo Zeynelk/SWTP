@@ -118,6 +118,8 @@
                                         <tr>
                                             <td>Benutzername :</td>
                                             <td><% out.print("&nbsp; &nbsp; &nbsp;" + session.getAttribute("sUserName")); %></td>
+                                            
+                                        
                                         </tr>
                                         <tr>
                                             <td>Vorname :</td>
@@ -126,6 +128,10 @@
                                         <tr>
                                             <td>Nachname :</td>
                                             <td><% out.print("&nbsp; &nbsp; &nbsp;" + session.getAttribute("sLastName"));%></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Rolle:</td>
+                                            <td><% out.print("&nbsp; &nbsp; &nbsp;" + session.getAttribute("sRole")); %></td>
                                         </tr>
                                     </tbody>
                                 </table>
