@@ -64,7 +64,7 @@
         <%
             if (users.first()) {
 
-                String redirectURL = "login.jsp";
+                String redirectURL = "setup/login.jsp";
                 response.sendRedirect(redirectURL);
 
             } else if(0==1){
@@ -73,7 +73,7 @@
                 
             }else {
 
-                String redirectURL = "setup.jsp";
+                String redirectURL = "setup/setup.jsp";
                 response.sendRedirect(redirectURL);
             }
         %>

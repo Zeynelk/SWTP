@@ -24,7 +24,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Document</title>
-        <link rel="stylesheet" href="style/css/style.css" media="screen" type="text/css" />
+        <link rel="stylesheet" href="../style/css/style.css" media="screen" type="text/css" />
 
         <script>
 
@@ -192,7 +192,7 @@
         </div>
 
         <script class="cssdeck" src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
-        <script src="style/js/index.js"></script>
+        <script src="../style/js/index.js"></script>
 
     <center>
 
