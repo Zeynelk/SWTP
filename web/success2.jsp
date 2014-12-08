@@ -85,7 +85,14 @@
                     
                    
                     <li>
+                   
                         <a href="blank-page.html"><i class="fa fa-fw fa-file"></i> Blank Page</a>
+                    </li>
+                    <li>
+                        
+                        
+                       
+                        
                     </li>
                 </ul>
             </div>
@@ -131,6 +138,7 @@
                                         </tr>
                                         <tr>
                                             <td>Rolle:</td>
+                   
                                             <td><% out.print("&nbsp; &nbsp; &nbsp;" + session.getAttribute("sRole")); %></td>
                                         </tr>
                                     </tbody>
