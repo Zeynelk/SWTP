@@ -20,19 +20,19 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin - Bootstrap Admin Template</title>
+    <title>SOMZDoc</title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="style/sbad/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../style/sbad/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="style/sbad/css/sb-admin.css" rel="stylesheet">
+    <link href="../style/sbad/css/sb-admin.css" rel="stylesheet">
 
     <!-- Morris Charts CSS -->
-    <link href="style/sbad/css/plugins/morris.css" rel="stylesheet">
+    <link href="../style/sbad/css/plugins/morris.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
-    <link href="style/sbad/font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="../style/sbad/font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -161,7 +161,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="success2.jsp">SB Admin</a>
+                <a class="navbar-brand" href="user.jsp">SOMZDoc</a>
             </div>
             <!-- Top Menu Items -->
             <ul class="nav navbar-right top-nav">
@@ -179,7 +179,7 @@
                         </li>
                         <li class="divider"></li>
                         <li>
-                            <a href="logout.jsp"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
+                            <a href="../setup/logout.jsp"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
                         </li>
                     </ul>
                 </li>
@@ -188,13 +188,9 @@
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav">
                     <li>
-                        <a href="index.html"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
+                        <a href="user.jsp"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
                     </li>
                     
-                   
-                    <li>
-                        <a href="blank-page.html"><i class="fa fa-fw fa-file"></i> Blank Page</a>
-                    </li>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -263,15 +259,15 @@
     <!-- /#wrapper -->
 
     <!-- jQuery -->
-    <script src="style/sbad/js/jquery.js"></script>
+    <script src="../style/sbad/js/jquery.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
-    <script src="style/sbad/js/bootstrap.min.js"></script>
+    <script src="../style/sbad/js/bootstrap.min.js"></script>
 
     <!-- Morris Charts JavaScript -->
-    <script src="style/js/plugins/morris/raphael.min.js"></script>
-    <script src="style/sbad/js/plugins/morris/morris.min.js"></script>
-    <script src="style/sbadjs/plugins/morris/morris-data.js"></script>
+    <script src="../style/js/plugins/morris/raphael.min.js"></script>
+    <script src="../style/sbad/js/plugins/morris/morris.min.js"></script>
+    <script src="../style/sbadjs/plugins/morris/morris-data.js"></script>
 
 </body>
 

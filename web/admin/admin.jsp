@@ -16,19 +16,19 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin - Bootstrap Admin Template</title>
+    <title>SOMZDoc Administration</title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="style/sbad/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../style/sbad/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="style/sbad/css/sb-admin.css" rel="stylesheet">
+    <link href="../style/sbad/css/sb-admin.css" rel="stylesheet">
 
     <!-- Morris Charts CSS -->
-    <link href="style/sbad/css/plugins/morris.css" rel="stylesheet">
+    <link href="../style/sbad/css/plugins/morris.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
-    <link href="style/sbad/font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="../style/sbad/font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -53,14 +53,14 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="success2.jsp">SB Admin</a>
+                <a class="navbar-brand" href="admin.jsp">SOMZDoc Administration</a>
             </div>
             <!-- Top Menu Items -->
             <ul class="nav navbar-right top-nav">
                 
    
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <% out.print("&nbsp; &nbsp; &nbsp;" + session.getAttribute("sFirstName")); %><% out.print(" "+session.getAttribute("sLastName"));%> <b class="caret"></b></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <% out.print("&nbsp; &nbsp; &nbsp;" + session.getAttribute("sUserName")); %><b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li>
                             <a href="profile.jsp"><i class="fa fa-fw fa-user"></i> Profile</a>
@@ -71,7 +71,7 @@
                         </li>
                         <li class="divider"></li>
                         <li>
-                            <a href="logout.jsp"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
+                            <a href="../setup/logout.jsp"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
                         </li>
                     </ul>
                 </li>
@@ -80,29 +80,12 @@
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav">
                     <li class="active">
-                        <a href="index.html"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
-                    </li>
-                    
-                   
-                    <li>
-                        
-                        <%
-                    if(session.getAttribute("sRole").equals("USER")){
-                        out.println("<a href=\"http://www.google.de\">LOLO</a>");
-                    }
-                        %>
-                    </li>
-                    
-                    <li>
-                        
-                        <a href="blank-page.html"><i class="fa fa-fw fa-file"></i> Blank Page</a>
+                        <a href="admin.jsp"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
                     </li>
                     <li>
-                        
-                        
-                       
-                        
+                    <a href="roles.jsp"><i class="fa fa-fw fa-edit"></i>Rollen</a>
                     </li>
+
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -137,14 +120,7 @@
                                             
                                         
                                         </tr>
-                                        <tr>
-                                            <td>Vorname :</td>
-                                            <td><% out.print("&nbsp; &nbsp; &nbsp;" + session.getAttribute("sFirstName")); %></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Nachname :</td>
-                                            <td><% out.print("&nbsp; &nbsp; &nbsp;" + session.getAttribute("sLastName"));%></td>
-                                        </tr>
+                                      
                                         <tr>
                                             <td>Rolle:</td>
                    
@@ -177,15 +153,15 @@
     <!-- /#wrapper -->
 
     <!-- jQuery -->
-    <script src="style/sbad/js/jquery.js"></script>
+    <script src="../style/sbad/js/jquery.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
-    <script src="style/sbad/js/bootstrap.min.js"></script>
+    <script src="../style/sbad/js/bootstrap.min.js"></script>
 
     <!-- Morris Charts JavaScript -->
-    <script src="style/js/plugins/morris/raphael.min.js"></script>
-    <script src="style/sbad/js/plugins/morris/morris.min.js"></script>
-    <script src="style/sbadjs/plugins/morris/morris-data.js"></script>
+    <script src="../style/js/plugins/morris/raphael.min.js"></script>
+    <script src="../style/sbad/js/plugins/morris/morris.min.js"></script>
+    <script src="../style/sbadjs/plugins/morris/morris-data.js"></script>
 
 </body>
 

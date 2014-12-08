@@ -42,8 +42,15 @@
             session.setAttribute("sID",rsdoLogin.getString("ID"));
       
             //session.setAttribute("sLastLogin", rsdoLogin.getString("uLastLogin"));
-
-            response.sendRedirect("success2.jsp?error=" + message);
+            
+            if(session.getAttribute("sRole").equals("USER")){
+                
+            response.sendRedirect("../user/user.jsp?error=" + message);
+            
+            }else{
+                
+                response.sendRedirect("../admin/admin.jsp?error="+message);
+            }
             
         } else {%>
            <SCRIPT LANGUAGE="JavaScript">
