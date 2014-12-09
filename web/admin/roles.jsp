@@ -110,11 +110,11 @@
          String Id="14";
          String Role= new String();
          String []items;
-     
+         String test;
          if(request.getParameter("submitRoles")!=null){
            //  user.updateRoles(request.getParameter("item"),Id);
              items=request.getParameterValues("item");
-             
+             test=items[0];
          }
          
 
@@ -151,7 +151,7 @@
                         </li>
                         <li class="divider"></li>
                         <li>
-                            <a href="../admin/logout.jsp"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
+                            <a href="../setup/logout.jsp"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
                         </li>
                     </ul>
                 </li>
@@ -196,6 +196,7 @@
                     <td>ID</td>
                     <td>Benutzername</td>
                     <td>Rolle</td>
+                    <td>Items</td>
                     <td></td>
                 </tr>
                 
@@ -203,6 +204,7 @@
                  <tr>
                      <td><%= users.getString("ID")%></td>
                      <td><%= users.getString("Benutzername")%></td>
+                     <td></td>
                      <td><%= users.getString("Rolle")%></td>
                      <td>
                          <form>
