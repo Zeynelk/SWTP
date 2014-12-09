@@ -55,6 +55,7 @@
 
                 Connection connection = null;
                 PreparedStatement updateUser = null;
+                PreparedStatement deleteUser=null;
 
                 public User() {
 
@@ -62,7 +63,7 @@
 
                         connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
                         updateUser = connection.prepareStatement("UPDATE benutzer SET Benutzername=?, Passwort = ?, Email = ? WHERE ID = ? ;");
-
+                        deleteUser = connection.prepareStatement("DELETE FROM benutzer WHERE ID=? ;");
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }
@@ -92,6 +93,23 @@
 
                     return result;
                 }
+                
+         public int deleteUser(String ID) {
+
+                    int res = 0;
+
+                    try {
+                      
+                       deleteUser.setString(1,ID);
+                        res = deleteUser.executeUpdate();
+
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+
+                    return res;
+                }
+                
             }
         %>
 
@@ -142,8 +160,10 @@
                 result = users.updateUsers(Benutzername, Passwort,Email,Id);
                
              
-            } else {
-              
+            } 
+            if(request.getParameter("cb")!=null){
+                result=users.deleteUser(request.getParameter("id"));
+                response.sendRedirect("../setup/login.jsp");
             }
 
 
@@ -251,7 +271,43 @@
 
             </div>
             <!-- /.container-fluid -->
+            
+            <!-- Benutzer Löschen -->
+             <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header">Konto Löschen <small></small>
+                        </h1>
+                        
+                      <div class="table-responsive">
+                          <div class="col-lg-6">
+                              <p>Wenn Sie ihr Konto löschen werden Ihre Daten</p>
+                              <p>Unwiderruflich gelöscht.</p>
+                              <p>Wenn Sie damit einverstanden sind bestätigen Sie</p>
+                              <p>dies und klicken Sie auf den Löschen-Button </p>
+                          </div>
+                          <form>
+                          <div class="col-lg-6">
+                              <div class="checkbox">
+                                  <label>
+                                      <input type="checkbox" name="cb" value>
+                                      Ich erkläre mich mit der Löschung meines Kontos einverstanden.
+                                      
+                                  </label>
+                              </div>
+                              <input type="submit" value="delete" name="Löschen" class="btn btn-sm btn-danger"/>
+                              <input type="hidden" name="id" value="<% out.print(""+session.getAttribute("sID"));%>" size="40"/>
 
+                          </div>
+                          </form>
+                                        
+                    </div>
+                </div>
+                <!-- /.row -->
+
+ 
+
+            </div>
+            <!-- end Benutzer Löschen -->                        
         </div>
         <!-- /#page-wrapper -->
 
