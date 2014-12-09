@@ -4,6 +4,8 @@
     Author     : alimpamukci
 --%>
 
+<%@page import="java.sql.*" %>
+<% Class.forName("com.mysql.jdbc.Driver");%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -41,6 +43,84 @@
 
 <body>
 
+    <%!
+        public class User {
+            String URL="jdbc:mysql://localhost:3306/USERS";
+            String USERNAME="root";
+            String PASSWORD="mapm";
+            
+            Connection connection = null;
+            PreparedStatement selectUser = null;
+            PreparedStatement updateRoles =null;
+            ResultSet resultSet = null;
+            
+            
+            public User(){
+                
+                try{
+                    
+                    connection = DriverManager.getConnection(URL,USERNAME,PASSWORD);
+                    selectUser = connection.prepareStatement("SELECT ID,Benutzername,Rolle FROM benutzer WHERE Rolle='USER';");
+                    updateRoles = connection.prepareStatement("UPDATE benutzer SET Rolle=? WHERE ID = ? ;");
+                }catch(SQLException e){
+                    e.printStackTrace();
+                }
+            }
+            
+            public ResultSet getUser(){
+                
+                try{
+                    
+                    resultSet=selectUser.executeQuery();
+                    
+                }catch(SQLException e){
+                    e.printStackTrace();
+                }
+                
+                return resultSet;
+            }
+            
+            
+             public int updateRoles(String Rolle, String ID) {
+
+                    int result = 0;
+                  
+                    
+
+                    try {
+                        updateRoles.setString(1, Rolle);
+                        updateRoles.setString(2, ID);
+
+                        result = updateRoles.executeUpdate();
+
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+
+                    return result;
+                }
+            
+        }
+        %>
+        
+         <%
+   User user= new User();
+         ResultSet users =user.getUser();
+         
+         String Id="14";
+         String Role= new String();
+         String []items;
+         String test;
+         if(request.getParameter("submitRoles")!=null){
+           //  user.updateRoles(request.getParameter("item"),Id);
+             items=request.getParameterValues("item");
+             test=items[0];
+         }
+         
+
+        %>
+    
+    
     <div id="wrapper">
 
         <!-- Navigation -->
@@ -71,7 +151,7 @@
                         </li>
                         <li class="divider"></li>
                         <li>
-                            <a href="../admin/logout.jsp"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
+                            <a href="../setup/logout.jsp"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
                         </li>
                     </ul>
                 </li>
@@ -104,35 +184,50 @@
             <div class="flat-form">
                 
                 <div id="logout" class="form-action show">
-                    <h1>Eingeloggt &#10003; </h1>
+                    <h1>Rollen</h1>
                     <p>
                         Sie haben sich erfolgreich angemeldet. Sie können sich nun abmelden.
                     </p>
-                    <form action="logout.jsp" method="POST">
-                        <ul>
-                         
-                                <br>
-                                <table>
-                                    <tbody>
-                                        <tr>
-                                            <td>Benutzername :</td>
-                                            <td><% out.print("&nbsp; &nbsp; &nbsp;" + session.getAttribute("sUserName")); %></td>
-                                            
-                                        
-                                        </tr>
-                                      
-                                        <tr>
-                                            <td>Rolle:</td>
                    
-                                            <td><% out.print("&nbsp; &nbsp; &nbsp;" + session.getAttribute("sRole")); %></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <br>
-
+                    <table class="table table-hover table-striped">
+           
+            <tbody>
+                <tr>
+                    <td>ID</td>
+                    <td>Benutzername</td>
+                    <td>Rolle</td>
+                    <td>Items</td>
+                    <td></td>
+                </tr>
+                
+                <% while(users.next()) {%>
+                 <tr>
+                     <td><%= users.getString("ID")%></td>
+                     <td><%= users.getString("Benutzername")%></td>
+                     <td></td>
+                     <td><%= users.getString("Rolle")%></td>
+                     <td>
+                         <form>
+                          <select name="item+<%= users.getString("ID")%>">
+                            <option value="USER">USER</option>
+                            <option value="ADMINISTRATOR">ADMINISTRATOR</option>
+                            <option value="ROLES">ROLES</option>
+                           
+                      
+                             </select>
                             
-                        </ul>
-                    </form>
+                         
+                     </td>
+                     
+                 </tr>
+                 <% } %>
+                    
+
+                        
+            </tbody>
+        </table>
+                    <input type="submit" name="submitRoles" value="Submit" size="40"/>
+                     </form>
                 </div>
             </div>
         </div>

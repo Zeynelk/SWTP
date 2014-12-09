@@ -27,23 +27,37 @@
 
                 Connection connection = null;
                 PreparedStatement insertUsers = null;
-
+                PreparedStatement insertRole =null;
+                
                 public User() {
 
                     try {
 
                         connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-                        insertUsers = connection.prepareStatement("INSERT INTO benutzer VALUES (?,?,?,?,?,?,?)");
+                        insertUsers = connection.prepareStatement("INSERT INTO benutzer VALUES (?,?,?,?,?,?);");
+                        insertRole= connection.prepareStatement("INSERT INTO benutzer_has_rolle VALUES ((SELECT benutzer.Benutzer_ID FROM benutzer WHERE Benutzername=?),'3');");
+                        
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                    
+                    
+
+                }
+                 public int setRole(String benutzerN){
+                     try {
+                        insertRole.setString(1, benutzerN);
+                        insertRole.executeUpdate();
 
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }
-
+                     return 0;
                 }
-
                 public int setUsers(String benutzerN, String passW, String vornameN, String nachnameN, String emailN) {
 
                     int result = 0;
+                    String Id= new String();
 
                     try {
                         insertUsers.setString(1, null);
@@ -52,9 +66,13 @@
                         insertUsers.setString(4, vornameN);
                         insertUsers.setString(5, nachnameN);
                         insertUsers.setString(6, emailN);
-                        insertUsers.setString(7, "USER");
+                    
+                        
+                        
+                       insertRole.setString(1, benutzerN);
 
                         result = insertUsers.executeUpdate();
+                        insertRole.executeUpdate();
 
                     } catch (SQLException e) {
                         e.printStackTrace();
@@ -62,7 +80,10 @@
 
                     return result;
                 }
+                
+               
             }
+            
         %>
 
         <%
@@ -101,6 +122,7 @@
             User users = new User();
             if (!benutzername.isEmpty() && !passwort.isEmpty()) {
                 result = users.setUsers(vorname, nachname, email, passwort, benutzername);
+                users.setRole(benutzername);
             } else {
 
             }

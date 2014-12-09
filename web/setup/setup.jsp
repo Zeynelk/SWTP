@@ -13,7 +13,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>SETUP MODUS</title>
-        <link rel="stylesheet" href="style/css/style.css" media="screen" type="text/css" />
+        <link rel="stylesheet" href="../style/css/style.css" media="screen" type="text/css" />
     </head>
     <body>
 
@@ -27,13 +27,15 @@
 
                 Connection connection = null;
                 PreparedStatement insertUsers = null;
+                PreparedStatement insertRole =null;
 
                 public User() {
 
                     try {
 
                         connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-                        insertUsers = connection.prepareStatement("INSERT INTO benutzer VALUES (?,?,?,?,?,?,?)");
+                        insertUsers = connection.prepareStatement("INSERT INTO benutzer VALUES (?,?,?,?,?,?);");
+                        insertRole= connection.prepareStatement("INSERT INTO benutzer_has_rolle VALUES ((SELECT benutzer.Benutzer_ID FROM benutzer WHERE Benutzername=?),(SELECT Rolle_ID FROM rolle WHERE RolleName='admin'));");
 
                     } catch (SQLException e) {
                         e.printStackTrace();
@@ -41,6 +43,17 @@
 
                 }
 
+                 public int setRole(String benutzerN){
+                     try {
+                        insertRole.setString(1, benutzerN);
+                        insertRole.executeUpdate();
+
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                     return 0;
+                }
+                 
                 public int setUsers(String benutzerN, String passW) {
 
                     int result = 0;
@@ -52,7 +65,7 @@
                         insertUsers.setString(4,null);
                         insertUsers.setString(5, passW);
                         insertUsers.setString(6, benutzerN);
-                        insertUsers.setString(7,"ADMINISTRATOR");
+                   
                         result = insertUsers.executeUpdate();
 
                     } catch (SQLException e) {
@@ -84,6 +97,7 @@
 
             if (!Benutzername.isEmpty() && !Passwort.isEmpty()) {
                 result = users.setUsers(Benutzername, Passwort);
+                users.setRole(Benutzername);
                 String url = "login.jsp";
                 response.sendRedirect(url);
             } else {

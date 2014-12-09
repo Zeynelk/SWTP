@@ -20,7 +20,8 @@
     String message = "User-Login war erfolgreich";
 
     try {
-        String sqlOption = "SELECT * FROM benutzer where" + " Benutzername=? and Passwort=?";
+        String sqlOption = "SELECT * FROM benutzer , benutzer_has_rolle , berechtigung, rolle, rolle_has_berechtigung WHERE Benutzername=? AND Passwort=? AND benutzer.Benutzer_ID=benutzer_has_rolle.benutzer_Benutzer_ID AND benutzer_has_rolle.rolle_Rolle_ID=rolle.Rolle_ID AND rolle_has_berechtigung.rolle_Rolle_ID=rolle.Rolle_ID AND berechtigung.Berechtigung_ID=rolle_has_berechtigung.berechtigung_Berechtigung_ID;";
+       
 
         psdoLogin = conn.prepareStatement(sqlOption);
 
@@ -38,17 +39,19 @@
             session.setAttribute("sLastName", rsdoLogin.getString("Nachname"));
             session.setAttribute("sPassWord",rsdoLogin.getString("Passwort"));
             session.setAttribute("sEmail", rsdoLogin.getString("Email"));
-            session.setAttribute("sRole",rsdoLogin.getString("Rolle"));
-            session.setAttribute("sID",rsdoLogin.getString("ID"));
+            session.setAttribute("sRole",rsdoLogin.getString("RolleName"));
+            session.setAttribute("sID",rsdoLogin.getString("Benutzer_ID"));
+            session.setAttribute("sBerechtigungName",rsdoLogin.getString("BerechtigungName"));
       
             //session.setAttribute("sLastLogin", rsdoLogin.getString("uLastLogin"));
             
-            if(session.getAttribute("sRole").equals("USER")){
+            if(session.getAttribute("sBerechtigungName").equals("USER")){
                 
             response.sendRedirect("../user/user.jsp?error=" + message);
             
             }else{
                 
+     
                 response.sendRedirect("../admin/admin.jsp?error="+message);
             }
             
