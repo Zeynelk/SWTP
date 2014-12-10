@@ -35,7 +35,7 @@
 
                         connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
                         insertUsers = connection.prepareStatement("INSERT INTO benutzer VALUES (?,?,?,?,?,?);");
-                        insertRole= connection.prepareStatement("INSERT INTO benutzer_has_rolle VALUES ((SELECT benutzer.Benutzer_ID FROM benutzer WHERE Benutzername=?),'3');");
+                        insertRole= connection.prepareStatement("INSERT INTO benutzer_has_rolle VALUES ((SELECT benutzer.Benutzer_ID FROM benutzer WHERE Benutzername=?),(SELECT Rolle_ID FROM rolle WHERE RolleName='default'));");
                         
                     } catch (SQLException e) {
                         e.printStackTrace();

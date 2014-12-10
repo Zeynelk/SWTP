@@ -56,6 +56,7 @@
                 Connection connection = null;
                 PreparedStatement updateUser = null;
                 PreparedStatement deleteUser=null;
+                PreparedStatement deleteUserRolle=null;
 
                 public User() {
 
@@ -63,7 +64,8 @@
 
                         connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
                         updateUser = connection.prepareStatement("UPDATE benutzer SET Benutzername=?, Passwort = ?, Email = ? WHERE ID = ? ;");
-                        deleteUser = connection.prepareStatement("DELETE FROM benutzer WHERE ID=? ;");
+                        deleteUserRolle = connection.prepareStatement("DELETE FROM benutzer_has_rolle WHERE benutzer_Benutzer_ID=?;");
+                        deleteUser = connection.prepareStatement("DELETE FROM benutzer WHERE Benutzer_ID=? ;");
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }
@@ -100,15 +102,34 @@
 
                     try {
                       
+                      
                        deleteUser.setString(1,ID);
+                      
                         res = deleteUser.executeUpdate();
-
+                       
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }
 
                     return res;
                 }
+         public int deleteUserRolle(String ID){
+             
+             int res=0;
+                 try {
+                      
+                      
+                       deleteUserRolle.setString(1,ID);
+                      
+                        res = deleteUserRolle.executeUpdate();
+                
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+
+                    return res;
+                
+         }
                 
             }
         %>
@@ -155,16 +176,25 @@
           
             User users = new User();
 
-            if (!Benutzername.isEmpty() && !Passwort.isEmpty() && !Email.isEmpty()) {
-      
-                result = users.updateUsers(Benutzername, Passwort,Email,Id);
-               
-             
-            } 
+            
+            
+             if(request.getParameter("cb")!=null){
+                result=users.deleteUserRolle(request.getParameter("id"));
+                result=users.deleteUser(request.getParameter("id"));
+                
+                response.sendRedirect("../setup/login.jsp");
+            }
+             /*
             if(request.getParameter("cb")!=null){
                 result=users.deleteUser(request.getParameter("id"));
                 response.sendRedirect("../setup/login.jsp");
-            }
+            }*/
+            if (!Benutzername.isEmpty() && !Passwort.isEmpty() && !Email.isEmpty()) {
+      
+                result = users.updateUsers(Benutzername, Passwort,Email,Id);
+  
+            } 
+             
 
 
         %>
