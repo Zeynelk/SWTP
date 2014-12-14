@@ -82,10 +82,11 @@
                     <li class="active">
                         <a href="admin.jsp"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
                     </li>
+                    
                     <li>
-                    <a href="roles.jsp"><i class="fa fa-fw fa-edit"></i>Rollen</a>
+                        <a href="roles.jsp"><i class="fa fa-fw fa-edit"></i>Rollen</a>
                     </li>
-
+  
                 </ul>
             </div>
             <!-- /.navbar-collapse -->

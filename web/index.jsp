@@ -21,7 +21,7 @@
                 String URL = "jdbc:mysql://localhost:3306/USERS";
 
                 String USERNAME = "root";
-                String PASSWORD = "mapm";
+                String PASSWORD = "";
 
                 Connection connection = null;
                 PreparedStatement selectUsers = null;
