@@ -63,7 +63,7 @@
                     try {
 
                         connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-                        updateUser = connection.prepareStatement("UPDATE benutzer SET Benutzername=?, Passwort = ?, Email = ? WHERE ID = ? ;");
+                        updateUser = connection.prepareStatement("UPDATE benutzer SET Benutzername=?, Passwort = ?, Email = ? WHERE Benutzer_ID = ? ;");
                         deleteUserRolle = connection.prepareStatement("DELETE FROM benutzer_has_rolle WHERE benutzer_Benutzer_ID=?;");
                         deleteUser = connection.prepareStatement("DELETE FROM benutzer WHERE Benutzer_ID=? ;");
                     } catch (SQLException e) {
@@ -137,10 +137,11 @@
         <%
 //Setup Values The User needs
             int result = 0;
-            String Benutzername = new String();
+            String Benutzername= new String();
             String Passwort = new String();
             String Email = new String();
             String Id= new String();
+          
             
 
 
@@ -176,7 +177,11 @@
           
             User users = new User();
 
-            
+               if (!Benutzername.isEmpty() && !Passwort.isEmpty() && !Email.isEmpty()) {
+          
+                   result = users.updateUsers(Benutzername, Passwort,Email,Id);
+                 
+            } 
             
              if(request.getParameter("cb")!=null){
                 result=users.deleteUserRolle(request.getParameter("id"));
@@ -189,11 +194,7 @@
                 result=users.deleteUser(request.getParameter("id"));
                 response.sendRedirect("../setup/login.jsp");
             }*/
-            if (!Benutzername.isEmpty() && !Passwort.isEmpty() && !Email.isEmpty()) {
-      
-                result = users.updateUsers(Benutzername, Passwort,Email,Id);
-  
-            } 
+         
              
 
 
