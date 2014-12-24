@@ -18,10 +18,10 @@
         <%!
             public class User {
 
-                String URL = "jdbc:mysql://localhost:3306/USERS";
+                String URL = "jdbc:mysql://localhost:3306/users";
 
                 String USERNAME = "root";
-                String PASSWORD = "smns";
+                String PASSWORD = "admin";
 
                 Connection connection = null;
                 PreparedStatement selectUsers = null;
