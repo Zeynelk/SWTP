@@ -20,7 +20,7 @@
     String message = "User-Login war erfolgreich";
 
     try {
-        String sqlOption = "SELECT * FROM benutzer , benutzer_has_rolle , berechtigung, rolle, rolle_has_berechtigung WHERE Benutzername=? AND Passwort=? AND benutzer.Benutzer_ID=benutzer_has_rolle.benutzer_Benutzer_ID AND benutzer_has_rolle.rolle_Rolle_ID=rolle.Rolle_ID AND rolle_has_berechtigung.rolle_Rolle_ID=rolle.Rolle_ID AND berechtigung.Berechtigung_ID=rolle_has_berechtigung.berechtigung_Berechtigung_ID;";
+        String sqlOption = "SELECT * FROM User , UserRole , Permission, Role, RolePermission WHERE Username=? AND Password=? AND User.User_ID=UserRole.User_ID AND UserRole.Role_ID=Role.Role_ID AND RolePermission.Role_ID=Role.Role_ID AND Permission.Permission_ID=RolePermission.Permission_ID;";
        
 
         psdoLogin = conn.prepareStatement(sqlOption);
@@ -31,17 +31,17 @@
         rsdoLogin = psdoLogin.executeQuery();
 
         if (rsdoLogin.next()) {
-            String ssUserName = rsdoLogin.getString("Benutzername");
+            String ssUserName = rsdoLogin.getString("Username");
 
             
             session.setAttribute("sUserName", ssUserName);
-            session.setAttribute("sFirstName", rsdoLogin.getString("Vorname"));
-            session.setAttribute("sLastName", rsdoLogin.getString("Nachname"));
-            session.setAttribute("sPassWord",rsdoLogin.getString("Passwort"));
+            session.setAttribute("sFirstName", rsdoLogin.getString("Firstname"));
+            session.setAttribute("sLastName", rsdoLogin.getString("Lastname"));
+            session.setAttribute("sPassWord",rsdoLogin.getString("Password"));
             session.setAttribute("sEmail", rsdoLogin.getString("Email"));
-            session.setAttribute("sRole",rsdoLogin.getString("RolleName"));
-            session.setAttribute("sID",rsdoLogin.getString("Benutzer_ID"));
-            session.setAttribute("sBerechtigungName",rsdoLogin.getString("BerechtigungName"));
+            session.setAttribute("sRole",rsdoLogin.getString("Rolename"));
+            session.setAttribute("sID",rsdoLogin.getString("User_ID"));
+            session.setAttribute("sBerechtigungName",rsdoLogin.getString("Permissionname"));
       
             //session.setAttribute("sLastLogin", rsdoLogin.getString("uLastLogin"));
             
