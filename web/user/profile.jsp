@@ -63,9 +63,9 @@
                     try {
 
                         connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-                        updateUser = connection.prepareStatement("UPDATE benutzer SET Benutzername=?, Passwort = ?, Email = ? WHERE Benutzer_ID = ? ;");
-                        deleteUserRolle = connection.prepareStatement("DELETE FROM benutzer_has_rolle WHERE benutzer_Benutzer_ID=?;");
-                        deleteUser = connection.prepareStatement("DELETE FROM benutzer WHERE Benutzer_ID=? ;");
+                        updateUser = connection.prepareStatement("UPDATE User SET Username=?, Password = ?, Email = ? WHERE User_ID = ? ;");
+                        deleteUserRolle = connection.prepareStatement("DELETE FROM UserRole WHERE User_ID=?;");
+                        deleteUser = connection.prepareStatement("DELETE FROM User WHERE User_ID=? ;");
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }

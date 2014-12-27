@@ -1,23 +1,16 @@
 <%-- 
-    Document   : success2
-    Created on : 06.12.2014, 18:33:37
-    Author     : alimpamukci
+    Document   : permission
+    Created on : 22.12.2014, 22:15:01
+    Author     : Zeynel
 --%>
-
+<%@page import="java.sql.*" %>
+<% Class.forName("com.mysql.jdbc.Driver");%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
     <head>
-
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="">
-        <meta name="author" content="">
-
-        <title>SOMZDoc Administration</title>
-
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Permissions</title>
         <!-- Bootstrap Core CSS -->
         <link href="../style/sbad/css/bootstrap.min.css" rel="stylesheet">
 
@@ -29,15 +22,60 @@
 
         <!-- Custom Fonts -->
         <link href="../style/sbad/font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
-        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-        <!--[if lt IE 9]>
-            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-        <![endif]-->
-
     </head>
+
+
+    <%!
+        public class Permission {
+
+            String URL = "jdbc:mysql://localhost:3306/USERS";
+            String USERNAME = "root";
+            String PASSWORD = "";
+
+            Connection connection = null;
+            PreparedStatement getPermissions = null;
+            ResultSet resultSet = null;
+            
+            
+            
+            public Permission() {
+
+                try {
+                    connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+                    
+                    getPermissions = connection.prepareStatement("SELECT * from Permission;");
+                    
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+
+            }
+            
+              public ResultSet getPermission() {
+
+                    try {
+
+                        resultSet = getPermissions.executeQuery();
+
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+
+                    return resultSet;
+              }
+
+        }
+    %>
+    
+    
+    <%
+
+            Permission perm = new Permission();
+            ResultSet perms = perm.getPermission();
+           
+            
+            
+   %>
 
     <body>
 
@@ -53,12 +91,14 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="admin.jsp">SOMZDoc Administration</a>
+                    <a class="navbar-brand" href="admin.jsp">SB Admin</a>
                 </div>
                 <!-- Top Menu Items -->
                 <ul class="nav navbar-right top-nav">
+
+
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <% out.print("&nbsp; &nbsp; &nbsp;" + session.getAttribute("sUserName")); %><b class="caret"></b></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <% out.print("&nbsp; &nbsp; &nbsp;" + session.getAttribute("sUserName"));%><b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li>
                                 <a href="profile.jsp"><i class="fa fa-fw fa-user"></i> Profile</a>
@@ -77,17 +117,15 @@
                 <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
                 <div class="collapse navbar-collapse navbar-ex1-collapse">
                     <ul class="nav navbar-nav side-nav">
-                        <li class="active">
+                        <li>
                             <a href="admin.jsp"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
                         </li>
 
-                        <li>
-                            
+                        <li  class="active">
+                           
                             <a href="roles2.jsp"><i class="fa fa-fw fa-edit"></i>Rollen</a>
                             <a href="permission.jsp"><i class="fa fa-fw fa-edit"></i>Berechtigungen</a>
-                            
                         </li>
-
                     </ul>
                 </div>
                 <!-- /.navbar-collapse -->
@@ -98,50 +136,45 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
+
+                    <h1 class="page-header">Berechtigungen</h1>
+
                     <div class="row">
                         <div class="col-lg-12">
-                            <div class="container">
-                                <div class="flat-form">
 
-                                    <div id="logout" class="form-action show">
-                                        <h1>Eingeloggt &#10003; </h1>
-                                        <p>
-                                            Sie haben sich erfolgreich angemeldet. Sie können sich nun abmelden.
-                                        </p>
-                                        <form action="logout.jsp" method="POST">
-                                            <ul>
+                            <table class="table col-lg-12">
+                                <tr>
 
-                                                <br>
-                                                <table>
-                                                    <tbody>
-                                                        <tr>
-                                                            <td>Benutzername :</td>
-                                                            <td><% out.print("&nbsp; &nbsp; &nbsp;" + session.getAttribute("sUserName")); %></td>
+                                    <td><strong>Permission ID</strong></td>
+                                    <td><strong>Permissionname</strong></td>
 
 
-                                                        </tr>
+                                </tr>
 
-                                                        <tr>
-                                                            <td>Rolle:</td>
-
-                                                            <td><% out.print("&nbsp; &nbsp; &nbsp;" + session.getAttribute("sRole"));%></td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                                <br>
+                                <% while (perms.next()) {
+                                
+                                                String a = perms.getString("Permission_ID");
+                                                String b = perms.getString("Permissionname");
 
 
-                                            </ul>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
+                                        %>
+                                <tr>
+                                    <td>    
+                                        <%= a %>
+                                    </td>
+                                    <td>
+                                        <%= b %>
+                                    </td>
+
+                                </tr>   
+                                <% } 
+                                 %>
+                            </table>
+
 
                         </div>
-                    </div>
-                    <!-- /.row -->
 
-
+                    </div> 
 
                 </div>
                 <!-- /.container-fluid -->
@@ -162,7 +195,5 @@
         <script src="../style/js/plugins/morris/raphael.min.js"></script>
         <script src="../style/sbad/js/plugins/morris/morris.min.js"></script>
         <script src="../style/sbadjs/plugins/morris/morris-data.js"></script>
-
     </body>
-
 </html>

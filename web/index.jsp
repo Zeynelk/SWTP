@@ -33,7 +33,7 @@
 
                         connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
 
-                        selectUsers = connection.prepareStatement("SELECT Benutzername FROM benutzer");
+                        selectUsers = connection.prepareStatement("SELECT Username FROM User");
                         
                     } catch (SQLException e) {
                         
