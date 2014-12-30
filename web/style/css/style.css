@@ -20,7 +20,7 @@ body {
   font-family: 'Roboto';
 }
 .tabs {
-  background: #c0392b; /*rot*/
+  background: #544A48; /*rot*/
   height: 40px;
   margin: 0;
   padding: 0;
@@ -37,7 +37,7 @@ body {
   padding: 0;
 }
 .tabs a {
-  background: #c0392b;
+  background: #544A48;
   display: block;
   float: left;
   text-decoration: none;
@@ -55,7 +55,7 @@ body {
   text-align: center;
 }
 .tabs a.active {
-  background: #e74c3c;
+  background: #544A48;
   border-right: none;
   -webkit-transition: all 0.5s linear;
   -moz-transition: all 0.5s linear;
@@ -183,7 +183,7 @@ margin-left:auto;
 margin-right:auto;
 color:#FFFFFF;
 font: normal 13px verdana, sans-serif;
-border-top:2px solid #c0392b;
+border-top:2px solid #544A48;
 }
 
 .class{

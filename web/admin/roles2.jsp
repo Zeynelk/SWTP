@@ -622,7 +622,7 @@
 
                     <div class="row">
                         <div class="col-lg-12">
-                            <form>
+                           
                             <table name="myTable" class="table table-hover table-striped">
 
                                 <tr>
@@ -635,6 +635,7 @@
 
                                 </tr>
                                 <% while (allUserRoles.next()) {%>
+                                <form>
                                 <tr id="row<%= allUserRoles.getString("User_ID")%>">
                                     <td><%= allUserRoles.getString("User_ID")%>
 
@@ -658,14 +659,14 @@
                                         </select>
                                     </td>
                                     <td>
-                                        <input type="submit" name="submit" value="Submit">
+                                        <input type="submit" name="setUserRole" value="Submit">
                                     </td>
 
                                 </tr>       
-
+                                </form>
                                 <% } %>
                             </table>
-                            </form>
+                            
                         </div> 
                     </div> 
 
