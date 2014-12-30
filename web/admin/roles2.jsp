@@ -551,11 +551,7 @@
 
                     <div class="row">
                         <div class="col-lg-12">
-<<<<<<< HEAD
-                           
-=======
                             
->>>>>>> zeybranch
                             <table name="myTable" class="table table-hover table-striped">
 
                                 <tr>
@@ -569,18 +565,10 @@
                                 </tr>
                                 <% while (allUserRoles.next()) {%>
                                 <form>
-<<<<<<< HEAD
-                                <tr id="row<%= allUserRoles.getString("User_ID")%>">
-                                    <td><%= allUserRoles.getString("User_ID")%>
-
-                                    </td>
-                                    <td><input type="hidden" value="<%= allUserRoles.getString("Username")%>" name="userName">
-=======
                                 <tr>
                                 
                                     <td><%= allUserRoles.getString("User_ID")%></td>
                                     <td><input type="hidden" value="<%= allUserRoles.getString("User_ID")%>" name="userId">
->>>>>>> zeybranch
                                         <%= allUserRoles.getString("Username")%>
                                     </td>
                                     <td><%= allUserRoles.getString("Rolename")%></td>
@@ -597,24 +585,12 @@
                                         </select>
                                             <% roleNames.beforeFirst(); %>
                                     </td>
-<<<<<<< HEAD
-                                    <td>
-                                        <input type="submit" name="setUserRole" value="Submit">
-                                    </td>
-
-                                </tr>       
-                                </form>
-                                <% } %>
-                            </table>
-                            
-=======
                                     <td><input type="submit" name="setUserRole" value="Submit"></td>
                                 </tr>       
                                   </form>
 
                                 <% } %>
                             </table>
->>>>>>> zeybranch
                         </div> 
                     </div> 
                     
