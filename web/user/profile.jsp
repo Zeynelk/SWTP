@@ -241,7 +241,15 @@
                     <li>
                         <a href="user.jsp"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
                     </li>
-                    
+                    <li>
+                            <a href="document.jsp"><i class="fa fa-fw fa-dashboard"></i>Dokumente</a>
+                        </li>
+                    <li>
+                        <a href="upload.jsp"><i class="fa fa-fw fa-dashboard"></i>Upload</a>
+                    </li>
+                     <li>
+                        <a href="category.jsp"><i class="fa fa-fw fa-dashboard"></i>Kategorien</a>
+                    </li>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
