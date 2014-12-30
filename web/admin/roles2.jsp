@@ -45,14 +45,7 @@
 
         
         <script type="text/javascript">
-            
-            function getTRid(){
-
-            alert(document.getElementById("myTable").rows.namedItem(this).innerHTML);
-            }
-
-  
-            
+     
             var counter = 0;
             var limit = 1;
             var counter2 = 0;
@@ -128,35 +121,30 @@
                 String PASSWORD = "";
 
                 Connection connection = null;
+                
                 PreparedStatement selectUser = null;
-                PreparedStatement updateRoles = null;
+                
                 PreparedStatement selectAllUserRole = null;
 
+                
+                ResultSet getAllUsers = null;
                 ResultSet resultSet = null;
                 ResultSet results = null;
-                ResultSet results2 = null;
-
                 ResultSet allRoles = null;
-                ResultSet getAllUsers = null;
                 ResultSet roleNames = null;
-
                 ResultSet roleNameByUser = null;
 
                 PreparedStatement allUsers = null;
-
                 PreparedStatement setRoles = null;
                 PreparedStatement setPermission = null;
                 PreparedStatement selectRoleName = null;
-
                 PreparedStatement showRoles = null;
-
                 PreparedStatement editRole = null;
                 PreparedStatement deleteRole = null;
-                PreparedStatement deleteRolePerm = null;
+              
 
                 PreparedStatement aloteRoleToUser = null;
-                PreparedStatement selectRole = null;
-                PreparedStatement selectRoleID = null;
+              
 
                 public User() {
 
@@ -166,22 +154,21 @@
                         selectUser = connection.prepareStatement("Select User_ID, Username, Rolename "
                                 + "from User, UserRole, Role "
                                 + "where User.User_ID = UserRole.User_ID AND UserRole.Role_ID = Role.Role_ID AND Role.Rolename != 'admin';");
-                        //selectUser = connection.prepareStatement("SELECT ID,Username FROM User WHERE Rolle='USER';");
+                        
                         allUsers = connection.prepareStatement("SELECT * from User;");
 
                         setRoles = connection.prepareStatement("INSERT INTO Role VALUES (null, ?);");
-                        selectRoleName = connection.prepareStatement("SELECT Rolename from Role;");
+                        selectRoleName = connection.prepareStatement("SELECT Rolename, Role_ID from Role;");
                         showRoles = connection.prepareStatement("SELECT * from Role;");
                         editRole = connection.prepareStatement("UPDATE Role SET Rolename = ? WHERE Role_ID = ?;");
                         setPermission = connection.prepareStatement("INSERT INTO RolePermission VALUES ((SELECT Role_ID FROM Role WHERE Rolename = ?), (SELECT Permission_ID FROM Permission WHERE Permissionname = ?));");
 
                         deleteRole = connection.prepareStatement("DELETE FROM Role WHERE Role_ID =?;");
-                        deleteRolePerm = connection.prepareStatement("DELETE FROM Role WHERE Role_ID =?;");
+                        
 
-                        aloteRoleToUser = connection.prepareStatement("INSERT INTO UserRole VALUES((SELECT User_ID FROM User WHERE Username =?),(SELECT Role_ID FROM Role WHERE Rolename=?));");
+                        aloteRoleToUser = connection.prepareStatement("UPDATE UserRole SET Role_ID = ? WHERE User_ID = ?;");
 
-                        selectRole = connection.prepareStatement("SELECT Rolename FROM Role WHERE Role_ID = ?");
-                        //selectRoleID = connection.prepareStatement("SELECT Role_ID FROM Role WHERE Rolename =?");
+                       
                         selectAllUserRole = connection.prepareStatement("SELECT * FROM UserRole, User, Role WHERE UserRole.User_ID= User.User_ID AND Role.Role_ID = UserRole.Role_ID;");
 
                     } catch (SQLException e) {
@@ -299,35 +286,6 @@
                     return res;
                 }
 
-                public int selectRoles(String Role_ID) {
-
-                    int result = 0;
-
-                    try {
-                        selectRole.setString(1, Role_ID);
-                        result = selectRole.executeUpdate();
-
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
-
-                    return result;
-                }
-
-                public int getRoleId(String rolename) {
-                    int res = 0;
-
-                    try {
-                        selectRoleID.setString(1, rolename);
-                        res = selectRoleID.executeUpdate();
-
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
-
-                    return res;
-                }
-
                 public int setPermToRole(String r, String p) {
 
                     int res = 0;
@@ -346,14 +304,15 @@
 
                 }
 
-                public int setRoleToUser(String Username, String Rolename) {
+                public int setRoleToUser(String RoleId, String UserId) {
 
                     int res = 0;
 
                     try {
-
-                        aloteRoleToUser.setString(1, Username);
-                        aloteRoleToUser.setString(2, Rolename);
+                                        
+                        aloteRoleToUser.setString(1, RoleId);
+                        aloteRoleToUser.setString(2, UserId);
+                        
                         res = aloteRoleToUser.executeUpdate();
 
                     } catch (SQLException e) {
@@ -371,30 +330,19 @@
         <%
 
             User user = new User();
-            User user2 = new User();
-
-            User user3 = new User();
-            ResultSet allUserRoles = user3.getAllUserRole();
-
-            ResultSet users = user.getUser();
-            ResultSet allUsers = user2.getUsers();
-
             User role = new User();
             User role3 = new User();
-
+            User user3 = new User();
+            
+            ResultSet allUserRoles = user3.getAllUserRole();
             ResultSet roleNames = role.getRole();
-
-            ResultSet roles2 = role.getRoles();
-
             ResultSet roles3 = role3.getRoles();
 
-            ResultSet roleNamesFromUser;
 
             String rId;
             String newRN;
             String rol;
             String permission;
-            String c;
             String userName;
 
             if (request.getParameter("radios") != null) {
@@ -434,23 +382,16 @@
                 response.sendRedirect("roles2.jsp");
             }
 
-            /*
-             if(request.getParameter("Submit") != null) {
-            
-             String uid = request.getParameter("Submit");
-             roleNamesFromUser = user.getRolenameFromUser(uid);
-               
-             }
-             */
-            if (request.getParameter("Submit") != null) {
+            if (request.getParameter("setUserRole") != null) {
 
-                userName = request.getParameter("userName");
-                rol = request.getParameter("roles");
+                userName = request.getParameter("userId");
+                
+                rol = request.getParameter("roleId");
 
-                user.setRoleToUser(userName, rol);
+                user.setRoleToUser(rol ,userName);
+                response.sendRedirect("roles2.jsp");
 
             }
-
 
         %>
 
@@ -517,7 +458,7 @@
                     <div class="row">
                         <div class="col-lg-12">
 
-                            <h1 class="page-header">Rollen bearbeiten Test</h1>
+                            <h1 class="page-header">Rollen bearbeiten</h1>
 
                         </div>
                     </div>
@@ -537,9 +478,7 @@
                                             <td>
                                                 <input type="button" value="Edit" onclick="addEditInput();">  
                                                 <input type="button" value="Delete" name="deleteRoleRB" onclick="addDeleteSubmit();">
-                                                <!--<button id="editButton" class="btn btn-sm btn-default" name="editRoleRB">
-                                               <button id="deleteButton" class="btn btn-sm btn-default" name="deleteRoleRB">Delete</button>-->
-
+                                                
                                             </td>
 
                                         </tr>
@@ -577,17 +516,7 @@
                                 </form>
 
                                 <span id="fooBar">&nbsp;</span>    
-                                <!--  
-                                <div id="editRoleNameDiv">
-                                Rolle editieren<br>
-                                <form method="POST">
-
-                                    <input name="newRoleName" type="text" size="30">
-                                    <input type="submit" name="editRoleName" value="Edit">
-
-
-                                </form>
-                            </div>    -->
+                               
                             </div>
                         </div>
 
@@ -622,7 +551,7 @@
 
                     <div class="row">
                         <div class="col-lg-12">
-                            <form>
+                            
                             <table name="myTable" class="table table-hover table-striped">
 
                                 <tr>
@@ -630,114 +559,41 @@
 
                                     <th>Username</th>
                                     <th>Current Role</th>
-                                    <th>Select Role</th>
+                                    <th>Change Role To</th>
                                     <th>Action</th>
 
                                 </tr>
                                 <% while (allUserRoles.next()) {%>
-                                <tr id="row<%= allUserRoles.getString("User_ID")%>">
-                                    <td><%= allUserRoles.getString("User_ID")%>
-
-                                    </td>
-                                    <td><input type="hidden" value="<%= allUserRoles.getString("Username")%>" name="userName">
+                                <form>
+                                <tr>
+                                
+                                    <td><%= allUserRoles.getString("User_ID")%></td>
+                                    <td><input type="hidden" value="<%= allUserRoles.getString("User_ID")%>" name="userId">
                                         <%= allUserRoles.getString("Username")%>
-
                                     </td>
-                                    <td><%= allUserRoles.getString("Rolename")%>
+                                    <td><%= allUserRoles.getString("Rolename")%></td>
 
-                                    </td>
                                     <td>
-                                        <select name="roles">
+                                        <select name="roleId">
 
                                             <% while (roleNames.next()) {%>
 
-                                            <option> <%= roleNames.getString("Rolename")%> </option>
+                                            <option value="<%= roleNames.getString("Role_ID")%>"><%= roleNames.getString("Rolename")%> </option>
 
                                             <%  } %>
-                                            <% roleNames.beforeFirst(); %>
+                                            
                                         </select>
+                                            <% roleNames.beforeFirst(); %>
                                     </td>
-                                    <td>
-                                        <input type="submit" name="submit" value="Submit">
-                                    </td>
-
+                                    <td><input type="submit" name="setUserRole" value="Submit"></td>
                                 </tr>       
+                                  </form>
 
                                 <% } %>
                             </table>
-                            </form>
                         </div> 
                     </div> 
-
-
-                    <!--
-                    <h4>Rolle zuweisen</h4>
                     
-                    <div class="row">
-                        <div class="col-lg-12">
-
-                            <div class="panel panel-default">
-                                <div class="panel-body">
-
-                                    <form>
-                                        <table class="table table-hover table-striped">
-
-                                            
-                                                <tr>
-                                                    <th>ID</th>
-
-                                                    <th>Username</th>
-                                                    <th>Current Role</th>
-                                                    <th>Select Role</th>
-                                                    <th>Action</th>
-                                                    
-                                                </tr>
-                                            
-                    <% while (allUsers.next()) {%>
-                    
-                    
-                        <tr>
-                            <td><%= allUsers.getString("User_ID")%></td>
-                            <td><input type="hidden" value="<%= allUsers.getString("Username")%>" name="userName"><%= allUsers.getString("Username")%></td>
-                            <td>
-                                Current Role
-                            </td>                                                  
-                            <td>
-                            
-                            <select name="roles">
-
-                    <% while (roleNames.next()) {
-                    %><option> <%= roleNames.getString("Rolename")%> </option>
-                    <%
-                        } %>
-                    <%roleNames.beforeFirst();%>
-        
-            
-
-    </select>
-    
-    </td>
-    <td>
-    <input type="submit" name="Submit" value="<%=allUsers.getString("Username")%>" />
-    </td>
-    
-    
-</tr>
-
-
-                    <% }%>
-
-                    
-                </table>
-                
-            </form>
-        </div>
-    </div>
-
-</div>
-
-</div>
-Role zu User zuweisen -->                       
 
                 </div>
                 <!-- /.container-fluid -->
