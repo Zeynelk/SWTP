@@ -24,6 +24,7 @@
 
         <!-- Custom Fonts -->
         <link href="../style/sbad/font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+      <script src="../style/js/sorttable.js"></script>
     </head>
 
 
@@ -197,11 +198,12 @@
                     <div class="row">
                         <div class="col-lg-12">
 
-                            <table class="table col-lg-12">
-                                <tr>
+                            <table class="table col-lg-12;sortable">
+                                <tr class="active">
 
                                     <td><strong>Kategorie ID</strong></td>
                                     <td><strong>Kategoriename</strong></td>
+                                    <td><strong>Action</strong></td>
 
 
                                 </tr>
@@ -224,6 +226,7 @@
                                 </tr>   
                                 <% } 
                                  %>
+                                 
                             </table>
 
 

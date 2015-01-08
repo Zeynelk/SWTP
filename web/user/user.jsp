@@ -114,7 +114,8 @@
                                         <div id="logout" class="form-action show">
                                             <h1>Eingeloggt &#10003; </h1>
                                             <p>
-                                                Sie haben sich erfolgreich angemeldet. Sie können sich nun abmelden.
+                                                Sie haben sich erfolgreich angemeldet. Sie können nun Dokumente hoch- und runterladen,
+                                                sowie Kontoeinstellungen vornehmen.
                                             </p>
                                             <form action="logout.jsp" method="POST">
                                                 <ul>

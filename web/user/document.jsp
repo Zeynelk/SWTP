@@ -56,6 +56,7 @@
             Connection connection = null;
             PreparedStatement getFiles = null;
             PreparedStatement getCategoryname = null;
+            PreparedStatement getCategories = null;
             ResultSet resultSet = null;
             ResultSet rsCategorynames = null;
 
@@ -65,7 +66,7 @@
                     connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
 
                     getFiles = connection.prepareStatement("SELECT * FROM User,File,FileCategory,Category WHERE User.User_ID=? and User.User_ID=File.User_ID and File.File_ID= FileCategory.File_ID and Category.Category_ID = FileCategory.Category_ID;");
-
+                    getCategories = connection.prepareStatement("SELECT * from Category;");
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -85,6 +86,19 @@
                 return resultSet;
             }
 
+            public ResultSet getCategories() {
+
+                try {
+
+                    resultSet = getCategories.executeQuery();
+
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+
+                return resultSet;
+            }
+
         }
     %>
 
@@ -93,6 +107,7 @@
 
         File file = new File();
         ResultSet files = file.getFiles(session.getAttribute("sID").toString());
+        ResultSet cats = file.getCategories();
 
 
     %>
@@ -167,28 +182,66 @@
 
 
                     <!-- /.row -->
-                    <center><img src="../images/download.jpg" width="30%" height="15%"></center>
-            
+                    <div class="col-lg-12">
+                        <div class="col-lg-1">
+
+                            <img src="../images/download.jpg" width="100%" height="50%">
+
+                        </div>
+                        <div class="col-lg-4">
+                            <p></p>
+                            <form action="document.jsp">
+                                <select name="selectFileCategory" class="form-control" onchange="this.form.submit()">
+
+                                    <option>All</option>
+                                    <% while (cats.next()) {%>
+
+                                    <option <%if (request.getParameter("selectFileCategory") != null) {
+                                            if (request.getParameter("selectFileCategory").equals(cats.getString("Categoryname"))) {
+                                                out.print("selected");
+                                            }
+                                        }%>> <%= cats.getString("Categoryname")%> </option>
+
+                                    <%  } %>
+                                    <% cats.beforeFirst();%>
+
+                                </select>
+                            </form>
+
+
+                        </div>
+
+                        <div class="col-lg-6">
+                            <p></p>
+                            <p>Links können Sie Dokumente spezieller Kategorien anzeigen lassen.</p>
+                        </div>
+
+                    </div>
                     <!-- 2. row -->
 
                     <div class="col-lg-12">
                         <!--<p>Current Users ID :<%=session.getAttribute("sID")%></p>-->
 
+                        <%if (1 == 1) {%>
                         <table class="table table-hover table-striped;sortable">
-                            <tr class="success">
+                            <tr class="active">
 
                                 <td><strong>Datei ID</strong></td>
                                 <td><strong>Dateiname</strong></td>
                                 <td><strong>Kategoriename</strong></td>
-                                <td><strong>Action</strong></td>
+                                <td><strong>Download</strong></td>
+                                <td><strong>View</strong></td>
+                                <td><strong>Email</strong></td>
 
 
                             </tr>
 
                             <% while (files.next()) {
 
-                                    String a = files.getString("File_ID");
-                                    String b = files.getString("Filename");
+                                    if ((request.getParameter("selectFileCategory") == null) || files.getString("Categoryname").equals(request.getParameter("selectFileCategory")) || request.getParameter("selectFileCategory").equals("All")) {
+
+                                        String a = files.getString("File_ID");
+                                        String b = files.getString("Filename");
 
 
                             %>
@@ -210,15 +263,27 @@
                                         <input type="submit" name="setUserRole" value="Download">
                                     </form>
                                 </td>
+                                <td>
+                                    <form method="get" action="FileServlet" enctype="multipart/form-data">
+
+                                        <input type="hidden" name="filename" value="<%=b%>" size="130"/>
+                                        <input type="submit" name="setUserRole" value="View">
+                                    </form>
+                                </td>
+                                <td><form action="SendMailAttachServlet" method="post" enctype="multipart/form-data">
+                                    <input class="form-control" type="text" name="email" value="" size="25" onsubmit="document.jsp"/>
+                                    </form>
+                                </td>
 
                             </tr>   
-
+                            <%}%>
                             <% }
                             %>
 
 
                         </table>
 
+                        <%}%>
 
                     </div>
 
