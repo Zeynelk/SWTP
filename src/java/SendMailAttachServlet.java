@@ -47,7 +47,7 @@ public class SendMailAttachServlet extends HttpServlet {
     private static final int BUFFER_SIZE = 4096;   
      
     // database connection settings
-    private String dbURL = "jdbc:mysql://localhost:3306/AppDB";
+    private String dbURL = "jdbc:mysql://localhost:3306/USERS";
     private String dbUser = "root";
     private String dbPass = "";
     
@@ -69,9 +69,9 @@ public class SendMailAttachServlet extends HttpServlet {
         List<File> uploadedFiles = new ArrayList<File>();
  
      
-     
-        File x = new File("Hallo.jpg");
-            String firstName = "Alim";
+         String fileid = request.getParameter("filename");
+        File x = new File(request.getParameter("filename"));
+           
          
         Connection conn = null; // connection to the database
        try{
@@ -80,14 +80,14 @@ public class SendMailAttachServlet extends HttpServlet {
             conn = DriverManager.getConnection(dbURL, dbUser, dbPass);
             
             // queries the database
-            String sql = "SELECT * FROM contacts WHERE first_name = ?";
+            String sql = "SELECT * FROM File WHERE Filename = ?";
             PreparedStatement statement = conn.prepareStatement(sql);
-            statement.setString(1, firstName);
+            statement.setString(1, fileid);
              ResultSet result = statement.executeQuery();
                if (result.next()) {
                 // gets file name and file blob data
 
-                Blob blob = result.getBlob("photo");
+                Blob blob = result.getBlob("Filedata");
                 InputStream inputStream = blob.getBinaryStream();
                 int fileLength = inputStream.available();
                  
@@ -126,14 +126,14 @@ public class SendMailAttachServlet extends HttpServlet {
             EmailUtility.sendEmailWithAttachment(host, port, user, pass,
                     recipient, subject, content, uploadedFiles);
              
-            resultMessage = "The e-mail was sent successfully";
+            resultMessage = "Die E-Mail wurde verschickt.";
         } catch (Exception ex) {
             ex.printStackTrace();
-            resultMessage = "There were an error: " + ex.getMessage();
+            resultMessage = "Die E-Mail konnte nicht verschickt werden. Fehler: " + ex.getMessage();
         } finally {
             deleteUploadFiles(uploadedFiles);
             request.setAttribute("message", resultMessage);
-            getServletContext().getRequestDispatcher("/result.jsp").forward(
+            getServletContext().getRequestDispatcher("/user/document.jsp").forward(
                     request, response);
         }
     }

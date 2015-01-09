@@ -41,6 +41,36 @@
 
         <script src="../style/js/sorttable.js"></script>
 
+        
+           <script>
+
+            function trim(s)
+            {
+                return s.replace(/^s*/, "").replace(/s*$/, "");
+            }
+
+            function validateEmail()
+            {
+
+                if (trim(document.sendMailForm.recipient.value) === "")
+                {
+                    alert("Es existiert noch keine Kategorie.Erstellen Sie eine Kategorie.");
+                    document.sendMailForm.recipient.focus();
+                    return false;
+                }
+                else if (trim(document.sendMailForm.subject.value) === "")
+                {
+                    alert("Keine Datei ausgewhält");
+                    document.sendMailForm.subject.focus();
+                    return false;
+                }
+
+
+            }
+
+
+
+        </script>
     </head>
 
 
@@ -109,6 +139,7 @@
         ResultSet files = file.getFiles(session.getAttribute("sID").toString());
         ResultSet cats = file.getCategories();
 
+        
 
     %>
 
@@ -184,13 +215,14 @@
                     <!-- /.row -->
                     <div class="col-lg-12">
                         <div class="col-lg-1">
-
-                            <img src="../images/download.jpg" width="100%" height="50%">
+                            <p></p>
+                            <p> <img src="../images/download.jpg" width="100%" height="90%"></p>
 
                         </div>
                         <div class="col-lg-4">
                             <p></p>
                             <form action="document.jsp">
+                                <label>Kategorien :</label>
                                 <select name="selectFileCategory" class="form-control" onchange="this.form.submit()">
 
                                     <option>All</option>
@@ -208,17 +240,23 @@
                                 </select>
                             </form>
 
+                                    <br>
+                                    </br>
 
                         </div>
 
                         <div class="col-lg-6">
                             <p></p>
                             <p>Links können Sie Dokumente spezieller Kategorien anzeigen lassen.</p>
+                            <form action="document.jsp">
+                                <input type="checkbox" name="activateMail" value="ON" <%if((request.getParameter("activateMail")!=null) && (request.getParameter("activateMail").equals("ON"))){out.print("checked");}%> onchange="this.form.submit()"  /> Aktiviert den E-Mail Modus
+                            </form>
                         </div>
 
                     </div>
                     <!-- 2. row -->
-
+                  
+                    
                     <div class="col-lg-12">
                         <!--<p>Current Users ID :<%=session.getAttribute("sID")%></p>-->
 
@@ -231,7 +269,8 @@
                                 <td><strong>Kategoriename</strong></td>
                                 <td><strong>Download</strong></td>
                                 <td><strong>View</strong></td>
-                                <td><strong>Email</strong></td>
+                                <%if((request.getParameter("activateMail")!=null) && (request.getParameter("activateMail").equals("ON"))){out.print(" <td><strong>Email</strong></td>");}%>
+                           
 
 
                             </tr>
@@ -270,10 +309,18 @@
                                         <input type="submit" name="setUserRole" value="View">
                                     </form>
                                 </td>
-                                <td><form action="SendMailAttachServlet" method="post" enctype="multipart/form-data">
-                                    <input class="form-control" type="text" name="email" value="" size="25" onsubmit="document.jsp"/>
+                                
+                                <%if(request.getParameter("activateMail")!=null && request.getParameter("activateMail").equals("ON")){%>
+                                <td><form name="sendMailForm" action="SendMailAttachServlet" method="post" onSubmit="return validateEmail();" enctype="multipart/form-data">
+                                   
+                                        <input class="form-control" type="text" name="recipient" value="" size="50" placeholder="E-Mail Adresse des Empfängers"/>
+                                        <input class="form-control" type="text" name="subject" size="50" placeholder="Betreff"/>
+                                    <textarea class="form-control" rows="10" cols="39" name="content" placeholder="Nachricht"></textarea>
+                                    <input type="hidden" name="filename" value="<%=b%>" size="130"/>
+                                    <input type="submit" value="Senden" />
                                     </form>
                                 </td>
+                                <%}%>
 
                             </tr>   
                             <%}%>
@@ -309,6 +356,17 @@
         <script src="../style/sbad/js/plugins/morris/morris.min.js"></script>
         <script src="../style/sbadjs/plugins/morris/morris-data.js"></script>
 
+        
+        
+        
+        <%            if ((request.getAttribute("message") != null)) { %>
+
+<SCRIPT LANGUAGE="JavaScript">
+                        alert("<%=request.getAttribute("message")%>");
+                        window.document.location.replace("document.jsp");
+</SCRIPT>   <%
+} 
+%>
     </body>
 
 </html>

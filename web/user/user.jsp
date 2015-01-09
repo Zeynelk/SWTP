@@ -153,7 +153,7 @@
                                     </div>
                                     <div class="col-lg-6">
                                         <br></br>
-                                        <img src="../images/logo.JPG" width="35%" height="45%"/>
+                                        <img src="../images/logo.jpg" width="35%" height="45%"/>
 
                                     </div>
                                 </div>
