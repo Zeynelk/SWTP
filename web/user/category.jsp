@@ -38,6 +38,7 @@
             Connection connection = null;
             PreparedStatement getCategories = null;
             PreparedStatement insertCategory=null;
+            PreparedStatement deleteCategory=null;
             ResultSet resultSet = null;
             
             
@@ -49,6 +50,7 @@
                     
                     getCategories = connection.prepareStatement("SELECT * from Category;");
                     insertCategory= connection.prepareStatement("INSERT INTO Category VALUES (null,?)");
+                    deleteCategory = connection.prepareStatement("DELETE FROM Category WHERE Category_ID=? ;");
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -67,6 +69,23 @@
 
                     return resultSet;
               }
+                public int deleteCategory(String ID) {
+
+                    int res = 0;
+
+                    try {
+                      
+                      
+                       deleteCategory.setString(1,ID);
+                      
+                        res = deleteCategory.executeUpdate();
+                       
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+
+                    return res;
+                }
               
               public int setCategory(String kategoriename){
                   
@@ -90,6 +109,7 @@
             Category cat = new Category();
             ResultSet cats = cat.getCategories();
             String kategoriename= new String();
+            int result=0;
            
             if(request.getParameter("kategorieAnlegen")!=null){
                 if(!request.getParameter("kategorieName").isEmpty()){
@@ -99,6 +119,12 @@
                     response.sendRedirect("category.jsp");
                 }
                 
+            }
+             if(request.getParameter("deleteCategory")!=null){
+                result=cat.deleteCategory(request.getParameter("id"));
+                result=cat.deleteCategory(request.getParameter("id"));
+                
+                response.sendRedirect("../user/category.jsp");
             }
             
             
@@ -131,9 +157,6 @@
                                 <a href="profile.jsp"><i class="fa fa-fw fa-user"></i> Profile</a>
                             </li>
 
-                            <li>
-                                <a href="#"><i class="fa fa-fw fa-gear"></i> Settings</a>
-                            </li>
                             <li class="divider"></li>
                             <li>
                                 <a href="../setup/logout.jsp"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
@@ -176,6 +199,18 @@
                            <div class="col-lg-6">
                                <p>Legen Sie Kategorien an, um Ihre Dokumente in die gewünschte Kategorie einzuordnen.</p>
                                <p>Wenn Sie noch keine Kategorien angelegt haben werden Sie keine Dateien hochladen können.</p>
+                           
+                               <div class="panel panel-red">
+                                   <div class="panel-heading">
+                                       <div>
+                                           Beachten Sie:
+                                           <p>Wenn Sie eine Kategorie löschen müssen, darf Sie nicht in Verwendung sein.</p>
+                                           <p>Das bedeutet: Nur wenn einer Kategorie keine Datei zugeordnet ist, kann eine </p>
+                                           <p> Kategorie gelöscht werden.</p>
+                                           
+                                       </div>
+                                   </div>
+                               </div>
                            </div>
                            <div class="col-lg-6">
                                
@@ -203,7 +238,7 @@
 
                                     <td><strong>Kategorie ID</strong></td>
                                     <td><strong>Kategoriename</strong></td>
-                                    <td><strong>Action</strong></td>
+                                    <td><strong>Löschen</strong></td>
 
 
                                 </tr>
@@ -222,11 +257,19 @@
                                     <td>
                                         <%= b %>
                                     </td>
+                                    <td>
+                                        <form>
+                                            <input class="btn btn-sm btn-danger" type="submit" value="Löschen" name="deleteCategory" />
+                                            <input type="hidden" name="id" value="<%=a%>" size="40"/>
+                                        </form>
+                                    </td>
 
-                                </tr>   
+                                </tr>
+                                
                                 <% } 
+                               
                                  %>
-                                 
+                                
                             </table>
 
 

@@ -87,6 +87,8 @@
             PreparedStatement getFiles = null;
             PreparedStatement getCategoryname = null;
             PreparedStatement getCategories = null;
+            PreparedStatement deleteFile=null;
+            PreparedStatement deleteFileCategory=null;
             ResultSet resultSet = null;
             ResultSet rsCategorynames = null;
 
@@ -97,11 +99,14 @@
 
                     getFiles = connection.prepareStatement("SELECT * FROM User,File,FileCategory,Category WHERE User.User_ID=? and User.User_ID=File.User_ID and File.File_ID= FileCategory.File_ID and Category.Category_ID = FileCategory.Category_ID;");
                     getCategories = connection.prepareStatement("SELECT * from Category;");
+                    deleteFileCategory = connection.prepareStatement("DELETE FROM FileCategory WHERE File_ID=?;");
+                    deleteFile = connection.prepareStatement("DELETE FROM File WHERE File_ID=? ;");
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
 
             }
+            
 
             public ResultSet getFiles(String userid) {
 
@@ -128,6 +133,40 @@
 
                 return resultSet;
             }
+                public int deleteFile(String ID) {
+
+                    int res = 0;
+
+                    try {
+                      
+                      
+                       deleteFile.setString(1,ID);
+                      
+                        res = deleteFile.executeUpdate();
+                       
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+
+                    return res;
+                }
+         public int deleteFileCategory(String ID){
+             
+             int res=0;
+                 try {
+                      
+                      
+                       deleteFileCategory.setString(1,ID);
+                      
+                        res = deleteFileCategory.executeUpdate();
+                
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+
+                    return res;
+                
+         }
 
         }
     %>
@@ -138,8 +177,14 @@
         File file = new File();
         ResultSet files = file.getFiles(session.getAttribute("sID").toString());
         ResultSet cats = file.getCategories();
+        int result=0;
 
-        
+         if(request.getParameter("deleteFile")!=null){
+                result=file.deleteFileCategory(request.getParameter("id"));
+                result=file.deleteFile(request.getParameter("id"));
+                
+                response.sendRedirect("../user/document.jsp");
+            }
 
     %>
 
@@ -172,9 +217,7 @@
                                 <a href="profile.jsp"><i class="fa fa-fw fa-user"></i> Profile</a>
                             </li>
 
-                            <li>
-                                <a href="#"><i class="fa fa-fw fa-gear"></i> Settings</a>
-                            </li>
+                            
                             <li class="divider"></li>
                             <li>
                                 <a href="../setup/logout.jsp"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
@@ -270,7 +313,7 @@
                                 <td><strong>Download</strong></td>
                                 <td><strong>View</strong></td>
                                 <%if((request.getParameter("activateMail")!=null) && (request.getParameter("activateMail").equals("ON"))){out.print(" <td><strong>Email</strong></td>");}%>
-                           
+                                <td><strong>Löschen</strong></td>
 
 
                             </tr>
@@ -321,7 +364,12 @@
                                     </form>
                                 </td>
                                 <%}%>
-
+                                <td>
+                                    <form>
+                                        <input class="btn btn-danger" type="submit" value="Löschen" name="deleteFile"/>
+                                        <input type="hidden" name="id" value="<%=a%>" size="40"/>
+                                    </form>
+                                </td>
                             </tr>   
                             <%}%>
                             <% }
