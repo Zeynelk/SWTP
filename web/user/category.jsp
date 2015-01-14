@@ -24,6 +24,7 @@
 
         <!-- Custom Fonts -->
         <link href="../style/sbad/font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+      <script src="../style/js/sorttable.js"></script>
     </head>
 
 
@@ -37,6 +38,7 @@
             Connection connection = null;
             PreparedStatement getCategories = null;
             PreparedStatement insertCategory=null;
+            PreparedStatement deleteCategory=null;
             ResultSet resultSet = null;
             
             
@@ -48,6 +50,7 @@
                     
                     getCategories = connection.prepareStatement("SELECT * from Category;");
                     insertCategory= connection.prepareStatement("INSERT INTO Category VALUES (null,?)");
+                    deleteCategory = connection.prepareStatement("DELETE FROM Category WHERE Category_ID=? ;");
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -66,6 +69,23 @@
 
                     return resultSet;
               }
+                public int deleteCategory(String ID) {
+
+                    int res = 0;
+
+                    try {
+                      
+                      
+                       deleteCategory.setString(1,ID);
+                      
+                        res = deleteCategory.executeUpdate();
+                       
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+
+                    return res;
+                }
               
               public int setCategory(String kategoriename){
                   
@@ -89,6 +109,7 @@
             Category cat = new Category();
             ResultSet cats = cat.getCategories();
             String kategoriename= new String();
+            int result=0;
            
             if(request.getParameter("kategorieAnlegen")!=null){
                 if(!request.getParameter("kategorieName").isEmpty()){
@@ -98,6 +119,12 @@
                     response.sendRedirect("category.jsp");
                 }
                 
+            }
+             if(request.getParameter("deleteCategory")!=null){
+                result=cat.deleteCategory(request.getParameter("id"));
+                result=cat.deleteCategory(request.getParameter("id"));
+                
+                response.sendRedirect("../user/category.jsp");
             }
             
             
@@ -130,9 +157,6 @@
                                 <a href="profile.jsp"><i class="fa fa-fw fa-user"></i> Profile</a>
                             </li>
 
-                            <li>
-                                <a href="#"><i class="fa fa-fw fa-gear"></i> Settings</a>
-                            </li>
                             <li class="divider"></li>
                             <li>
                                 <a href="../setup/logout.jsp"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
@@ -151,10 +175,10 @@
                             <a href="document.jsp"><i class="fa fa-fw fa-dashboard"></i>Dokumente</a>
                         </li>
                     <li  >
-                        <a href="upload.jsp"><i class="fa fa-fw fa-dashboard"></i>Upload</a>
+                        <a href="upload.jsp"><i class="fa fa-fw fa-upload"></i>Upload</a>
                     </li>
                     <li class="active">
-                        <a href="category.jsp"><i class="fa fa-fw fa-dashboard"></i>Kategorien</a>
+                        <a href="category.jsp"><i class="fa fa-fw fa-table"></i>Kategorien</a>
                     </li>
                     </ul>
                 </div>
@@ -175,6 +199,17 @@
                            <div class="col-lg-6">
                                <p>Legen Sie Kategorien an, um Ihre Dokumente in die gewünschte Kategorie einzuordnen.</p>
                                <p>Wenn Sie noch keine Kategorien angelegt haben werden Sie keine Dateien hochladen können.</p>
+                           
+                               
+                                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="alert alert-info alert-dismissable">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            <i class="fa fa-info-circle"></i>  <strong>Löschen: </strong> Sie können nur Kategorien löschen, die von keiner Datei verwendet wird.
+                        </div>
+                    </div>
+                </div>
+                               
                            </div>
                            <div class="col-lg-6">
                                
@@ -197,11 +232,12 @@
                     <div class="row">
                         <div class="col-lg-12">
 
-                            <table class="table col-lg-12">
-                                <tr>
+                            <table class="table col-lg-12;sortable">
+                                <tr class="active">
 
                                     <td><strong>Kategorie ID</strong></td>
                                     <td><strong>Kategoriename</strong></td>
+                                    <td><strong>Löschen</strong></td>
 
 
                                 </tr>
@@ -220,10 +256,19 @@
                                     <td>
                                         <%= b %>
                                     </td>
+                                    <td>
+                                        <form>
+                                            <input class="btn btn-sm btn-danger" type="submit" value="Löschen" name="deleteCategory" />
+                                            <input type="hidden" name="id" value="<%=a%>" size="40"/>
+                                        </form>
+                                    </td>
 
-                                </tr>   
+                                </tr>
+                                
                                 <% } 
+                               
                                  %>
+                                
                             </table>
 
 

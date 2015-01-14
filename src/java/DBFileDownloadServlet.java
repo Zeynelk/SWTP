@@ -62,7 +62,7 @@ public class DBFileDownloadServlet extends HttpServlet {
                 ServletContext context = getServletContext();
  
                 // sets MIME type for the file download
-                String mimeType = "JPEG";
+                String mimeType = "application/pdf";
                 if (mimeType == null) {        
                     mimeType = "application/octet-stream";
                 }              

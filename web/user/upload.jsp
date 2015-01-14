@@ -39,7 +39,7 @@
             <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
 
-        
+
         <script>
 
             function trim(s)
@@ -62,11 +62,11 @@
                     document.uploadFile.uploadedFile.focus();
                     return false;
                 }
-               
+
 
             }
 
-   
+
 
         </script>
 
@@ -84,9 +84,9 @@
             Connection connection = null;
             PreparedStatement getCategories = null;
             PreparedStatement insertCategory = null;
-            PreparedStatement insertFileCategory=null;
+            PreparedStatement insertFileCategory = null;
             ResultSet resultSet = null;
-            ResultSet getFileID=null;
+            ResultSet getFileID = null;
 
             public Category() {
 
@@ -95,7 +95,7 @@
 
                     getCategories = connection.prepareStatement("SELECT * from Category;");
                     insertCategory = connection.prepareStatement("INSERT INTO Category VALUES (null,?)");
-                    insertFileCategory= connection.prepareStatement("INSERT INTO FileCategory VALUES((SELECT File_ID FROM File ORDER BY File_ID DESC LIMIT 1),(SELECT Category_ID FROM Category WHERE Categoryname=?));");
+                    insertFileCategory = connection.prepareStatement("INSERT INTO FileCategory VALUES((SELECT File_ID FROM File ORDER BY File_ID DESC LIMIT 1),(SELECT Category_ID FROM Category WHERE Categoryname=?));");
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -115,15 +115,13 @@
                 return resultSet;
             }
 
-             public int insertFileCategory(String categoryId) {
-                 
-                
-                 
-                 int result=0;
+            public int insertFileCategory(String categoryId) {
+
+                int result = 0;
 
                 try {
                     insertFileCategory.setString(1, categoryId);
-                    result=insertFileCategory.executeUpdate();
+                    result = insertFileCategory.executeUpdate();
 
                 } catch (SQLException e) {
                     e.printStackTrace();
@@ -139,9 +137,6 @@
         Category cat = new Category();
         ResultSet cats = cat.getCategories();
        // cat.insertFileCategory(request.getParameter("setFileCategory"));
-        
-   
-    
 
 
     %>
@@ -169,9 +164,7 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <% out.print("&nbsp; &nbsp; &nbsp;" + session.getAttribute("sFirstName")); %><% out.print(" " + session.getAttribute("sLastName"));%> <b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li>
-                                <a href="profile.jsp"><i class="fa fa-fw fa-user"></i> Profile</a>
-                            </li>
+                           
 
                             <li>
                                 <a href="#"><i class="fa fa-fw fa-gear"></i> Settings</a>
@@ -189,15 +182,15 @@
                         <li>
                             <a href="user.jsp"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
                         </li>
-                        
+
                         <li>
-                            <a href="document.jsp"><i class="fa fa-fw fa-dashboard"></i>Dokumente</a>
+                            <a href="document.jsp"><i class="fa fa-fw fa-download"></i>Dokumente</a>
                         </li>
                         <li class="active" >
-                            <a href="upload.jsp"><i class="fa fa-fw fa-dashboard"></i>Upload</a>
+                            <a href="upload.jsp"><i class="fa fa-fw fa-upload"></i>Upload</a>
                         </li>
                         <li>
-                            <a href="category.jsp"><i class="fa fa-fw fa-dashboard"></i>Kategorien</a>
+                            <a href="category.jsp"><i class="fa fa-fw fa-table"></i>Kategorien</a>
                         </li>
 
                     </ul>
@@ -211,13 +204,13 @@
 
             <!-- Page Heading -->
 
-            <div class="col-lg-12">
+            <div id="page-wrapper" class="col-lg-12">
 
                 <div class="col-lg-4">
                     <br></br>
-                    <h2 style="color:white">Kategorie </h2>
-                    <p style="color:white">Wählen Sie eine Kategorie aus , welcher Ihr Dokument zugewiesen werden soll.</p>
-                    <p style="color:white">Wenn Sie noch keine Kategorie erstellt haben, klicken Sie <a href="category.jsp">hier</a> um eine Kategorie zu erstellen.</p>
+                    <h2>Kategorie </h2>
+                    <p>Wählen Sie eine Kategorie aus , welcher Ihr Dokument zugewiesen werden soll.</p>
+                    <p>Wenn Sie noch keine Kategorie erstellt haben, klicken Sie <a href="category.jsp">hier</a> um eine Kategorie zu erstellen.</p>
                     <br></br>
 
                     <form name="uploadFile" method="post" action="uploadServlet" onSubmit="return validateUpload();" enctype="multipart/form-data">
@@ -237,20 +230,20 @@
 
                 <div class="col-lg-4">
                     <div class="flat-form">
-                        <br></br>
+                        <p></p>
                         <center>  <img src="../images/upload.png" width="30%" height="15%"/>
                             <br>
                             </br>
                     </div>
 
                     <div class="form-group" >
-                        <h2 style="color: white">Dokument Hochladen</h2>
+                        <h3>Dokument Hochladen</h3>
 
                         <table border="0">
 
                             <tr>
 
-                                <td><input type="file" name="uploadedFile" size="50" style="color:white"/></td>
+                                <td><input type="file" name="uploadedFile" size="50"/></td>
                             <input type="hidden" name="User_ID" value="<%=session.getAttribute("sID")%>" size="50"/>
                             </tr>
                             <tr>
@@ -266,9 +259,17 @@
 
 
                 </div>
-
+                            <br></br>
+                            <br></br>
                 <div class="col-lg-4">
-
+                      <div class="row">
+                    <div class="col-lg-12">
+                        <div class="alert alert-info alert-dismissable">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            <i class="fa fa-info-circle"></i>  <strong>Upload:<p></p> </strong> <p></p>1. Kategorie auswählen <p></p> 2. Datei auswählen <p></p> 3. Hochladen
+                        </div>
+                    </div>
+                </div>
                 </div>
             </div>
 
@@ -303,17 +304,16 @@
 
 <%
 
-/*
-1. Parameter= setFileCategory
-2.
-*/
+    /*
+     1. Parameter= setFileCategory
+     2.
+     */
 %>
 
 
- <%
-        cat.insertFileCategory(request.getParameter("setFileCategory"));
+<%     cat.insertFileCategory(request.getParameter("setFileCategory"));
 
-    %>
+%>
 
 
 
@@ -322,13 +322,20 @@
 <%            if ((request.getAttribute("Message") != null) && (request.getAttribute("Message").toString() == "YES")) { %>
 
 <SCRIPT LANGUAGE="JavaScript">
-    alert("Upload erfolgreich.");
-    window.document.location.replace("upload.jsp");
+                        alert("Upload erfolgreich.");
+                        window.document.location.replace("upload.jsp");
 </SCRIPT>   <%
 } else if (request.getAttribute("Message") != null && request.getAttribute("Messsage") != "YES") {
 %>
 <SCRIPT LANGUAGE="JavaScript">
     alert("Upload Fehlgeschlagen.");
+    window.document.location.replace("upload.jsp");
+</SCRIPT>
+<%
+} else if (request.getAttribute("Message") == null && request.getAttribute("FileCheck") != null) {
+%>
+<SCRIPT LANGUAGE="JavaScript">
+    alert("Die von Ihnen gewählte Datei ist kein PDF Dokument.");
     window.document.location.replace("upload.jsp");
 </SCRIPT>
 <%

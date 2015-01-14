@@ -225,9 +225,7 @@
                             <a href="profile.jsp"><i class="fa fa-fw fa-user"></i> Profile</a>
                         </li>
                     
-                        <li>
-                            <a href="#"><i class="fa fa-fw fa-gear"></i> Settings</a>
-                        </li>
+                       
                         <li class="divider"></li>
                         <li>
                             <a href="../setup/logout.jsp"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
@@ -242,13 +240,13 @@
                         <a href="user.jsp"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
                     </li>
                     <li>
-                            <a href="document.jsp"><i class="fa fa-fw fa-dashboard"></i>Dokumente</a>
+                            <a href="document.jsp"><i class="fa fa-fw fa-download"></i>Dokumente</a>
                         </li>
                     <li>
-                        <a href="upload.jsp"><i class="fa fa-fw fa-dashboard"></i>Upload</a>
+                        <a href="upload.jsp"><i class="fa fa-fw fa-upload"></i>Upload</a>
                     </li>
                      <li>
-                        <a href="category.jsp"><i class="fa fa-fw fa-dashboard"></i>Kategorien</a>
+                        <a href="category.jsp"><i class="fa fa-fw fa-table"></i>Kategorien</a>
                     </li>
                 </ul>
             </div>

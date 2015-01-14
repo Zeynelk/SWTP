@@ -41,6 +41,36 @@
 
         <script src="../style/js/sorttable.js"></script>
 
+        
+           <script>
+
+            function trim(s)
+            {
+                return s.replace(/^s*/, "").replace(/s*$/, "");
+            }
+
+            function validateEmail()
+            {
+
+                if (trim(document.sendMailForm.recipient.value) === "")
+                {
+                    alert("Es existiert noch keine Kategorie.Erstellen Sie eine Kategorie.");
+                    document.sendMailForm.recipient.focus();
+                    return false;
+                }
+                else if (trim(document.sendMailForm.subject.value) === "")
+                {
+                    alert("Keine Datei ausgewhält");
+                    document.sendMailForm.subject.focus();
+                    return false;
+                }
+
+
+            }
+
+
+
+        </script>
     </head>
 
 
@@ -56,6 +86,9 @@
             Connection connection = null;
             PreparedStatement getFiles = null;
             PreparedStatement getCategoryname = null;
+            PreparedStatement getCategories = null;
+            PreparedStatement deleteFile=null;
+            PreparedStatement deleteFileCategory=null;
             ResultSet resultSet = null;
             ResultSet rsCategorynames = null;
 
@@ -65,12 +98,15 @@
                     connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
 
                     getFiles = connection.prepareStatement("SELECT * FROM User,File,FileCategory,Category WHERE User.User_ID=? and User.User_ID=File.User_ID and File.File_ID= FileCategory.File_ID and Category.Category_ID = FileCategory.Category_ID;");
-
+                    getCategories = connection.prepareStatement("SELECT * from Category;");
+                    deleteFileCategory = connection.prepareStatement("DELETE FROM FileCategory WHERE File_ID=?;");
+                    deleteFile = connection.prepareStatement("DELETE FROM File WHERE File_ID=? ;");
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
 
             }
+            
 
             public ResultSet getFiles(String userid) {
 
@@ -85,6 +121,53 @@
                 return resultSet;
             }
 
+            public ResultSet getCategories() {
+
+                try {
+
+                    resultSet = getCategories.executeQuery();
+
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+
+                return resultSet;
+            }
+                public int deleteFile(String ID) {
+
+                    int res = 0;
+
+                    try {
+                      
+                      
+                       deleteFile.setString(1,ID);
+                      
+                        res = deleteFile.executeUpdate();
+                       
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+
+                    return res;
+                }
+         public int deleteFileCategory(String ID){
+             
+             int res=0;
+                 try {
+                      
+                      
+                       deleteFileCategory.setString(1,ID);
+                      
+                        res = deleteFileCategory.executeUpdate();
+                
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+
+                    return res;
+                
+         }
+
         }
     %>
 
@@ -93,7 +176,15 @@
 
         File file = new File();
         ResultSet files = file.getFiles(session.getAttribute("sID").toString());
+        ResultSet cats = file.getCategories();
+        int result=0;
 
+         if(request.getParameter("deleteFile")!=null){
+                result=file.deleteFileCategory(request.getParameter("id"));
+                result=file.deleteFile(request.getParameter("id"));
+                
+                response.sendRedirect("../user/document.jsp");
+            }
 
     %>
 
@@ -126,9 +217,7 @@
                                 <a href="profile.jsp"><i class="fa fa-fw fa-user"></i> Profile</a>
                             </li>
 
-                            <li>
-                                <a href="#"><i class="fa fa-fw fa-gear"></i> Settings</a>
-                            </li>
+                            
                             <li class="divider"></li>
                             <li>
                                 <a href="../setup/logout.jsp"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
@@ -144,14 +233,14 @@
                         </li>
 
                         <li class="active">
-                            <a href="document.jsp"><i class="fa fa-fw fa-dashboard"></i>Dokumente</a>
+                            <a href="document.jsp"><i class="fa fa-fw fa-download"></i>Dokumente</a>
                         </li>
                         <li>
-                            <a href="upload.jsp"><i class="fa fa-fw fa-dashboard"></i>Upload</a>
+                            <a href="upload.jsp"><i class="fa fa-fw fa-upload"></i>Upload</a>
                         </li>
 
                         <li>
-                            <a href="category.jsp"><i class="fa fa-fw fa-dashboard"></i>Kategorien</a>
+                            <a href="category.jsp"><i class="fa fa-fw fa-table"></i>Kategorien</a>
                         </li>
 
                     </ul>
@@ -167,28 +256,74 @@
 
 
                     <!-- /.row -->
-                    <center><img src="../images/download.jpg" width="30%" height="15%"></center>
-            
-                    <!-- 2. row -->
+                    <div class="col-lg-12">
+                        <div class="col-lg-1">
+                            <p></p>
+                            <p> <img src="../images/download.jpg" width="100%" height="90%"></p>
 
+                        </div>
+                        <div class="col-lg-4">
+                            <p></p>
+                            <form action="document.jsp">
+                                <label>Kategorien :</label>
+                                <select name="selectFileCategory" class="form-control" onchange="this.form.submit()">
+
+                                    <option>All</option>
+                                    <% while (cats.next()) {%>
+
+                                    <option <%if (request.getParameter("selectFileCategory") != null) {
+                                            if (request.getParameter("selectFileCategory").equals(cats.getString("Categoryname"))) {
+                                                out.print("selected");
+                                            }
+                                        }%>> <%= cats.getString("Categoryname")%> </option>
+
+                                    <%  } %>
+                                    <% cats.beforeFirst();%>
+
+                                </select>
+                            </form>
+
+                                    <br>
+                                    </br>
+
+                        </div>
+
+                        <div class="col-lg-6">
+                            <p></p>
+                            <p>Links können Sie Dokumente spezieller Kategorien anzeigen lassen.</p>
+                            <form action="document.jsp">
+                                <input type="checkbox" name="activateMail" value="ON" <%if((request.getParameter("activateMail")!=null) && (request.getParameter("activateMail").equals("ON"))){out.print("checked");}%> onchange="this.form.submit()"  /> Aktiviert den E-Mail Modus
+                            </form>
+                        </div>
+
+                    </div>
+                    <!-- 2. row -->
+                  
+                    
                     <div class="col-lg-12">
                         <!--<p>Current Users ID :<%=session.getAttribute("sID")%></p>-->
 
+                        <%if (1 == 1) {%>
                         <table class="table table-hover table-striped;sortable">
-                            <tr class="success">
+                            <tr class="active">
 
                                 <td><strong>Datei ID</strong></td>
                                 <td><strong>Dateiname</strong></td>
                                 <td><strong>Kategoriename</strong></td>
-                                <td><strong>Action</strong></td>
+                                <td><strong>Download</strong></td>
+                                <td><strong>View</strong></td>
+                                <%if((request.getParameter("activateMail")!=null) && (request.getParameter("activateMail").equals("ON"))){out.print(" <td><strong>Email</strong></td>");}%>
+                                <td><strong>Löschen</strong></td>
 
 
                             </tr>
 
                             <% while (files.next()) {
 
-                                    String a = files.getString("File_ID");
-                                    String b = files.getString("Filename");
+                                    if ((request.getParameter("selectFileCategory") == null) || files.getString("Categoryname").equals(request.getParameter("selectFileCategory")) || request.getParameter("selectFileCategory").equals("All")) {
+
+                                        String a = files.getString("File_ID");
+                                        String b = files.getString("Filename");
 
 
                             %>
@@ -210,15 +345,40 @@
                                         <input type="submit" name="setUserRole" value="Download">
                                     </form>
                                 </td>
+                                <td>
+                                    <form method="get" action="FileServlet" enctype="multipart/form-data">
 
+                                        <input type="hidden" name="filename" value="<%=b%>" size="130"/>
+                                        <input type="submit" name="setUserRole" value="View">
+                                    </form>
+                                </td>
+                                
+                                <%if(request.getParameter("activateMail")!=null && request.getParameter("activateMail").equals("ON")){%>
+                                <td><form name="sendMailForm" action="SendMailAttachServlet" method="post" onSubmit="return validateEmail();" enctype="multipart/form-data">
+                                   
+                                        <input class="form-control" type="text" name="recipient" value="" size="50" placeholder="E-Mail Adresse des Empfängers"/>
+                                        <input class="form-control" type="text" name="subject" size="50" placeholder="Betreff"/>
+                                    <textarea class="form-control" rows="10" cols="39" name="content" placeholder="Nachricht"></textarea>
+                                    <input type="hidden" name="filename" value="<%=b%>" size="130"/>
+                                    <input type="submit" value="Senden" />
+                                    </form>
+                                </td>
+                                <%}%>
+                                <td>
+                                    <form>
+                                        <input class="btn btn-danger" type="submit" value="Löschen" name="deleteFile"/>
+                                        <input type="hidden" name="id" value="<%=a%>" size="40"/>
+                                    </form>
+                                </td>
                             </tr>   
-
+                            <%}%>
                             <% }
                             %>
 
 
                         </table>
 
+                        <%}%>
 
                     </div>
 
@@ -244,6 +404,17 @@
         <script src="../style/sbad/js/plugins/morris/morris.min.js"></script>
         <script src="../style/sbadjs/plugins/morris/morris-data.js"></script>
 
+        
+        
+        
+        <%            if ((request.getAttribute("message") != null)) { %>
+
+<SCRIPT LANGUAGE="JavaScript">
+                        alert("<%=request.getAttribute("message")%>");
+                        window.document.location.replace("document.jsp");
+</SCRIPT>   <%
+} 
+%>
     </body>
 
 </html>

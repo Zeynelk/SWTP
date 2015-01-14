@@ -92,7 +92,7 @@ form input[type=password] {
   padding-left: 15px;
   background: #fff;
   border: none;
-  color: #e74c3c;
+  color: black;
   outline: none;
 }
 
@@ -122,7 +122,7 @@ form input[type=password] {
 .button {
     border: none;
     display: block;
-    background: #136899;
+    background: #544A48;
     height: 40px;
     width: 80px;
     color: #ffffff;
@@ -153,7 +153,7 @@ form input[type=password] {
 }
 ::-moz-placeholder {
   /* Firefox 19+ */
-  color: #e74c3c;
+  color: black;
 }
 :-ms-input-placeholder {
   color: #000000;
