@@ -82,14 +82,14 @@
                         </li>
 
                         <li>
-                            <a href="document.jsp"><i class="fa fa-fw fa-dashboard"></i>Dokumente</a>
+                            <a href="document.jsp"><i class="fa fa-fw fa-download"></i>Dokumente</a>
                         </li>
                         <li>
-                            <a href="upload.jsp"><i class="fa fa-fw fa-dashboard"></i>Upload</a>
+                            <a href="upload.jsp"><i class="fa fa-fw fa-upload"></i>Upload</a>
                         </li>
 
                         <li>
-                            <a href="category.jsp"><i class="fa fa-fw fa-dashboard"></i>Kategorien</a>
+                            <a href="category.jsp"><i class="fa fa-fw fa-table"></i>Kategorien</a>
                         </li>
 
                     </ul>
@@ -102,6 +102,97 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
+                    
+                   <div class="row">
+                    <div class="col-lg-3 col-md-6">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <i class="fa fa-upload fa-5x"></i>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <div class="huge"></div>
+                                        <div></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="upload.jsp">
+                                <div class="panel-footer">
+                                    <span class="pull-left">Dokumente Hochladen</span>
+                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="panel panel-green">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <i class="fa fa-tasks fa-5x"></i>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <div class="huge"></div>
+                                        <div></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="document.jsp">
+                                <div class="panel-footer">
+                                    <span class="pull-left">Meine Dokumente</span>
+                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="panel panel-yellow">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <i class="fa fa-table fa-5x"></i>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <div class="huge"></div>
+                                        <div></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="category.jsp">
+                                <div class="panel-footer">
+                                    <span class="pull-left">Kategorien</span>
+                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="panel panel-red">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <i class="fa fa-adjust fa-5x"></i>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <div class="huge"></div>
+                                        <div>Einstellungen</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="profile.jsp">
+                                <div class="panel-footer">
+                                    <span class="pull-left">Bearbeiten</span>
+                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
                     <div class="row">
                         <div class="col-lg-12">
 
@@ -110,7 +201,7 @@
                                 <div class="flat-form">
                                     <div class="col-lg-6">
                                         <div id="logout" class="form-action show">
-                                            <h1>Eingeloggt &#10003; </h1>
+                                            <h1>Eingeloggt  </h1>
                                             <p>
                                                 Sie haben sich erfolgreich angemeldet. Sie können nun Dokumente hoch- und runterladen,
                                                 sowie Kontoeinstellungen vornehmen.
@@ -119,24 +210,24 @@
                                                 <ul>
 
                                                     <br>
-                                                    <table>
+                                                    <table class="table table-bordered table-hover">
                                                         <tbody>
                                                             <tr>
-                                                                <td>Benutzername :</td>
+                                                                <td><strong>Benutzername</strong> </td>
                                                                 <td><% out.print("&nbsp; &nbsp; &nbsp;" + session.getAttribute("sUserName")); %></td>
 
 
                                                             </tr>
                                                             <tr>
-                                                                <td>Vorname :</td>
+                                                                <td><strong>Vorname </strong></td>
                                                                 <td><% out.print("&nbsp; &nbsp; &nbsp;" + session.getAttribute("sFirstName")); %></td>
                                                             </tr>
                                                             <tr>
-                                                                <td>Nachname :</td>
+                                                                <td><strong>Nachname </strong></td>
                                                                 <td><% out.print("&nbsp; &nbsp; &nbsp;" + session.getAttribute("sLastName"));%></td>
                                                             </tr>
                                                             <tr>
-                                                                <td>Rolle:</td>
+                                                                <td><strong>Rolle</strong></td>
 
                                                                 <td><% out.print("&nbsp; &nbsp; &nbsp;" + session.getAttribute("sRole"));%></td>
                                                             </tr>
@@ -151,6 +242,7 @@
                                     </div>
                                     <div class="col-lg-6">
                                         <br></br>
+                                        <br></br><br></br>
                                         <img src="../images/logo.jpg" width="35%" height="45%"/>
 
                                     </div>

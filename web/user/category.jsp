@@ -175,10 +175,10 @@
                             <a href="document.jsp"><i class="fa fa-fw fa-dashboard"></i>Dokumente</a>
                         </li>
                     <li  >
-                        <a href="upload.jsp"><i class="fa fa-fw fa-dashboard"></i>Upload</a>
+                        <a href="upload.jsp"><i class="fa fa-fw fa-upload"></i>Upload</a>
                     </li>
                     <li class="active">
-                        <a href="category.jsp"><i class="fa fa-fw fa-dashboard"></i>Kategorien</a>
+                        <a href="category.jsp"><i class="fa fa-fw fa-table"></i>Kategorien</a>
                     </li>
                     </ul>
                 </div>
@@ -200,17 +200,16 @@
                                <p>Legen Sie Kategorien an, um Ihre Dokumente in die gewünschte Kategorie einzuordnen.</p>
                                <p>Wenn Sie noch keine Kategorien angelegt haben werden Sie keine Dateien hochladen können.</p>
                            
-                               <div class="panel panel-red">
-                                   <div class="panel-heading">
-                                       <div>
-                                           Beachten Sie:
-                                           <p>Wenn Sie eine Kategorie löschen müssen, darf Sie nicht in Verwendung sein.</p>
-                                           <p>Das bedeutet: Nur wenn einer Kategorie keine Datei zugeordnet ist, kann eine </p>
-                                           <p> Kategorie gelöscht werden.</p>
-                                           
-                                       </div>
-                                   </div>
-                               </div>
+                               
+                                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="alert alert-info alert-dismissable">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            <i class="fa fa-info-circle"></i>  <strong>Löschen: </strong> Sie können nur Kategorien löschen, die von keiner Datei verwendet wird.
+                        </div>
+                    </div>
+                </div>
+                               
                            </div>
                            <div class="col-lg-6">
                                

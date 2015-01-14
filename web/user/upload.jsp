@@ -184,13 +184,13 @@
                         </li>
 
                         <li>
-                            <a href="document.jsp"><i class="fa fa-fw fa-dashboard"></i>Dokumente</a>
+                            <a href="document.jsp"><i class="fa fa-fw fa-download"></i>Dokumente</a>
                         </li>
                         <li class="active" >
-                            <a href="upload.jsp"><i class="fa fa-fw fa-dashboard"></i>Upload</a>
+                            <a href="upload.jsp"><i class="fa fa-fw fa-upload"></i>Upload</a>
                         </li>
                         <li>
-                            <a href="category.jsp"><i class="fa fa-fw fa-dashboard"></i>Kategorien</a>
+                            <a href="category.jsp"><i class="fa fa-fw fa-table"></i>Kategorien</a>
                         </li>
 
                     </ul>
@@ -259,9 +259,17 @@
 
 
                 </div>
-
+                            <br></br>
+                            <br></br>
                 <div class="col-lg-4">
-
+                      <div class="row">
+                    <div class="col-lg-12">
+                        <div class="alert alert-info alert-dismissable">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            <i class="fa fa-info-circle"></i>  <strong>Upload:<p></p> </strong> <p></p>1. Kategorie auswählen <p></p> 2. Datei auswählen <p></p> 3. Hochladen
+                        </div>
+                    </div>
+                </div>
                 </div>
             </div>
 
