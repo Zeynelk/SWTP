@@ -776,7 +776,7 @@ if (typeof jQuery === 'undefined') {
     if (!isActive) {
       if ('ontouchstart' in document.documentElement && !$parent.closest('.navbar-nav').length) {
         // if mobile we use a backdrop because click events don't delegate
-        $('<div class="dropdown-backdrop"/>').insertAfter($(this)).on('click', clearMenus)
+     $('<div class="dropdown-backdrop"/>').insertAfter($(this)).on('click', clearMenus)
       }
 
       var relatedTarget = { relatedTarget: this }
@@ -2275,3 +2275,13 @@ if (typeof jQuery === 'undefined') {
   })
 
 }(jQuery);
+
+$('li.dropdown.mega-dropdown a').on('click', function (event) {
+    $(this).parent().toggleClass("open");
+});
+
+$('body').on('click', function (e) {
+    if (!$('li.dropdown.mega-dropdown').is(e.target) && $('li.dropdown.mega-dropdown').has(e.target).length === 0 && $('.open').has(e.target).length === 0) {
+        $('li.dropdown.mega-dropdown').removeClass('open');
+    }
+});

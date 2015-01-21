@@ -41,8 +41,8 @@
 
         <script src="../style/js/sorttable.js"></script>
 
-        
-           <script>
+
+        <script>
 
             function trim(s)
             {
@@ -87,8 +87,8 @@
             PreparedStatement getFiles = null;
             PreparedStatement getCategoryname = null;
             PreparedStatement getCategories = null;
-            PreparedStatement deleteFile=null;
-            PreparedStatement deleteFileCategory=null;
+            PreparedStatement updateFilename = null;
+
             ResultSet resultSet = null;
             ResultSet rsCategorynames = null;
 
@@ -99,14 +99,12 @@
 
                     getFiles = connection.prepareStatement("SELECT * FROM User,File,FileCategory,Category WHERE User.User_ID=? and User.User_ID=File.User_ID and File.File_ID= FileCategory.File_ID and Category.Category_ID = FileCategory.Category_ID;");
                     getCategories = connection.prepareStatement("SELECT * from Category;");
-                    deleteFileCategory = connection.prepareStatement("DELETE FROM FileCategory WHERE File_ID=?;");
-                    deleteFile = connection.prepareStatement("DELETE FROM File WHERE File_ID=? ;");
+                    updateFilename = connection.prepareStatement("UPDATE File SET Filename = ? WHERE File_ID = ?;");
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
 
             }
-            
 
             public ResultSet getFiles(String userid) {
 
@@ -133,40 +131,23 @@
 
                 return resultSet;
             }
-                public int deleteFile(String ID) {
 
-                    int res = 0;
+            public int updateFilename(String filename, String fileid) {
 
-                    try {
-                      
-                      
-                       deleteFile.setString(1,ID);
-                      
-                        res = deleteFile.executeUpdate();
-                       
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
+                int result = 0;
 
-                    return res;
+                try {
+                    updateFilename.setString(1, filename);
+                    updateFilename.setString(2, fileid);
+
+                    result = updateFilename.executeUpdate();
+
+                } catch (SQLException e) {
+                    e.printStackTrace();
                 }
-         public int deleteFileCategory(String ID){
-             
-             int res=0;
-                 try {
-                      
-                      
-                       deleteFileCategory.setString(1,ID);
-                      
-                        res = deleteFileCategory.executeUpdate();
-                
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
 
-                    return res;
-                
-         }
+                return result;
+            }
 
         }
     %>
@@ -177,14 +158,14 @@
         File file = new File();
         ResultSet files = file.getFiles(session.getAttribute("sID").toString());
         ResultSet cats = file.getCategories();
-        int result=0;
+        int result = 0;
 
-         if(request.getParameter("deleteFile")!=null){
-                result=file.deleteFileCategory(request.getParameter("id"));
-                result=file.deleteFile(request.getParameter("id"));
-                
-                response.sendRedirect("../user/document.jsp");
-            }
+        if (request.getParameter("changeFilename") != null) {
+
+            file.updateFilename(request.getParameter("dateiName"), request.getParameter("dateiID"));
+            response.sendRedirect("rename.jsp");
+        }
+
 
     %>
 
@@ -217,7 +198,7 @@
                                 <a href="profile.jsp"><i class="fa fa-fw fa-user"></i> Profile</a>
                             </li>
 
-                            
+
                             <li class="divider"></li>
                             <li>
                                 <a href="../setup/logout.jsp"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
@@ -237,7 +218,7 @@
                         </li>
                         <li>
                             <a data-target="#demo" data-toggle="collapse" href="javascript:;" class="" aria-expanded="true"><i class="fa fa-fw fa-arrows-v"></i> Verwalten <i class="fa fa-fw fa-caret-down"></i></a>
-                            <ul class="collapse out" id="demo" aria-expanded="true" style="">
+                            <ul class="collapse in" id="demo" aria-expanded="true" style="">
                                 <li>
                                     <a href="rename.jsp">Umbenennen</a>
                                 </li>
@@ -270,12 +251,11 @@
                     <div class="col-lg-12">
                         <div class="col-lg-1">
                             <p></p>
-                            <p> <img src="../images/download.jpg" width="100%" height="90%"></p>
 
                         </div>
                         <div class="col-lg-4">
                             <p></p>
-                            <form action="document.jsp">
+                            <form action="rename.jsp">
                                 <label>Kategorien :</label>
                                 <select name="selectFileCategory" class="form-control" onchange="this.form.submit()">
 
@@ -294,23 +274,16 @@
                                 </select>
                             </form>
 
-                                    <br>
-                                    </br>
+                            <br>
+                            </br>
 
                         </div>
 
-                        <div class="col-lg-6">
-                            <p></p>
-                            <p>Links können Sie Dokumente spezieller Kategorien anzeigen lassen.</p>
-                            <form action="document.jsp">
-                                <input type="checkbox" name="activateMail" value="ON" <%if((request.getParameter("activateMail")!=null) && (request.getParameter("activateMail").equals("ON"))){out.print("checked");}%> onchange="this.form.submit()"  /> Aktiviert den E-Mail Modus
-                            </form>
-                        </div>
 
                     </div>
                     <!-- 2. row -->
-                  
-                    
+
+
                     <div class="col-lg-12">
                         <!--<p>Current Users ID :<%=session.getAttribute("sID")%></p>-->
 
@@ -321,10 +294,7 @@
                                 <td><strong>Datei ID</strong></td>
                                 <td><strong>Dateiname</strong></td>
                                 <td><strong>Kategoriename</strong></td>
-                                <td><strong>Download</strong></td>
-                                <td><strong>View</strong></td>
-                                <%if((request.getParameter("activateMail")!=null) && (request.getParameter("activateMail").equals("ON"))){out.print(" <td><strong>Email</strong></td>");}%>
-                                <td><strong>Löschen</strong></td>
+                                <td><strong>Action</strong></td>
 
 
                             </tr>
@@ -338,49 +308,29 @@
 
 
                             %>
-                            <tr>
-                                <td>    
-                                    <%= a%>
-                                </td>
-                                <td>
-                                    <%= b%>
+                            <form>
+                                <tr>
+                                    <td>    
+                                        <%= a%>
+                                    </td>
+                                    <td>
+                                        <input  type="text" name="dateiName" value="<%=b%>" size="40" />
+                                        <input  type="hidden" name="dateiID" value="<%=a%>" size="40" />
 
-                                </td>
-                                <td>
-                                    <%=files.getString("Categoryname")%>
-                                </td>
-                                <td sorttable_customkey="<%= a%>">
-                                    <form method="get" action="downloadFileServlet" enctype="multipart/form-data">
 
-                                        <input type="hidden" name="filename" value="<%=b%>" size="130"/>
-                                        <input type="submit" name="setUserRole" value="Download">
-                                    </form>
-                                </td>
-                                <td>
-                                    <form method="get" action="FileServlet" enctype="multipart/form-data">
+                                    </td>
+                                    <td>
+                                        <%=files.getString("Categoryname")%>
+                                    </td>
 
-                                        <input type="hidden" name="filename" value="<%=b%>" size="130"/>
-                                        <input type="submit" name="setUserRole" value="View">
-                                    </form>
-                                </td>
-                                
-                                <%if(request.getParameter("activateMail")!=null && request.getParameter("activateMail").equals("ON")){%>
-                                <td><form name="sendMailForm" action="SendMailAttachServlet" method="post" onSubmit="return validateEmail();" enctype="multipart/form-data">
-                                   
-                                        <input class="form-control" type="text" name="recipient" value="" size="50" placeholder="E-Mail Adresse des Empfängers"/>
-                                        <input class="form-control" type="text" name="subject" size="50" placeholder="Betreff"/>
-                                    <textarea class="form-control" rows="10" cols="39" name="content" placeholder="Nachricht"></textarea>
-                                    <input type="hidden" name="filename" value="<%=b%>" size="130"/>
-                                    <input type="submit" value="Senden" />
-                                    </form>
-                                </td>
-                                <%}%>
-                                <td>
-                                    <form>
-                                        <input class="btn btn-danger" type="submit" value="Löschen" name="deleteFile"/>
-                                        <input type="hidden" name="id" value="<%=a%>" size="40"/>
-                                    </form>
-                                </td>
+
+                                    <td>
+
+
+
+                                        <input class="btn btn-danger" type="submit" value="Ändern" name="changeFilename"/>
+                            </form>
+                            </td>
                             </tr>   
                             <%}%>
                             <% }
@@ -415,17 +365,17 @@
         <script src="../style/sbad/js/plugins/morris/morris.min.js"></script>
         <script src="../style/sbadjs/plugins/morris/morris-data.js"></script>
 
-        
-        
-        
-        <%            if ((request.getAttribute("message") != null)) { %>
 
-<SCRIPT LANGUAGE="JavaScript">
-                        alert("<%=request.getAttribute("message")%>");
-                        window.document.location.replace("document.jsp");
-</SCRIPT>   <%
-} 
-%>
+
+
+        <%            if ((request.getAttribute("message") != null)) {%>
+
+        <SCRIPT LANGUAGE="JavaScript">
+                                    alert("<%=request.getAttribute("message")%>");
+                                    window.document.location.replace("document.jsp");
+        </SCRIPT>   <%
+            }
+        %>
     </body>
 
 </html>

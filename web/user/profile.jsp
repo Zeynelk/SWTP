@@ -20,7 +20,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SOMZDoc</title>
+    <title>MOSZDoc</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="../style/sbad/css/bootstrap.min.css" rel="stylesheet">
@@ -212,7 +212,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="user.jsp">SOMZDoc</a>
+ <a class="navbar-brand" href="user.jsp"><img src="../images/logo.png"height="150%" width="60%"></a>
             </div>
             <!-- Top Menu Items -->
             <ul class="nav navbar-right top-nav">
@@ -241,6 +241,17 @@
                     </li>
                     <li>
                             <a href="document.jsp"><i class="fa fa-fw fa-download"></i>Dokumente</a>
+                        </li>
+                        <li>
+                            <a data-target="#demo" data-toggle="collapse" href="javascript:;" class="" aria-expanded="true"><i class="fa fa-fw fa-arrows-v"></i> Verwalten <i class="fa fa-fw fa-caret-down"></i></a>
+                            <ul class="collapse out" id="demo" aria-expanded="true" style="">
+                                <li>
+                                    <a href="rename.jsp">Umbenennen</a>
+                                </li>
+                                <li>
+                                    <a href="changecategory.jsp">Verschieben</a>
+                                </li>
+                            </ul>
                         </li>
                     <li>
                         <a href="upload.jsp"><i class="fa fa-fw fa-upload"></i>Upload</a>
